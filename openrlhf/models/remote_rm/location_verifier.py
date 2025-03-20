@@ -37,7 +37,8 @@ def verify_format(content):
     """
     think_count = content.count("<think>")
     answer_count = content.count("<answer>")
-    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1
+    comma_count = content.count(",")
+    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 and comma_count == 1
 
 
 
