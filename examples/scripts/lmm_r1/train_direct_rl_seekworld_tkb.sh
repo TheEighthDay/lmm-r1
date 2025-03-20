@@ -5,7 +5,7 @@
 
 # Base paths - MODIFY THESE
 export WORKSPACE_DIR="$(pwd)/experiments"                      # Path to project root directory
-export DATASET_PATH="/data/phd/tiankaibin/dataset/mathv_geo_message.jsonl"  # Path to your dataset
+export DATASET_PATH="/data/phd/tiankaibin/dataset/data/qwen_format/train.jsonl"  # Path to your dataset
 export PRETRAIN_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"  # Path to pretrained model
 export SAVE_PATH="$(pwd)/experiments/checkpoints"                   # Path to save checkpoints
 
@@ -54,7 +54,7 @@ ray start --head --node-ip-address 0.0.0.0 --num-gpus 8 --temp-dir ~/.cache/ray
 
 # Start remote reward model server
 echo "Starting remote reward model server..."
-python -m openrlhf.models.remote_rm.math_verifier \
+python -m openrlhf.models.remote_rm.location_verifier \
     --dataset "${DATASET_PATH}" \
     --input_key message \
     --prompt-template chatml 2>&1 | tee -a "${CUR_LOG_DIR}/remote_rm.log" &
