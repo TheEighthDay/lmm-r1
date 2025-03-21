@@ -141,7 +141,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input_key", type=str, default="prompt", help="The key name of prompt."
     )
-    parser.add_argument("--log_file", type=str, default="remote_rm.log", help="Log file path")
+    parser.add_argument("--log_file", type=str, default="remote_rm_reward.log", help="Log file path")
     args = parser.parse_args()
     logger.remove()
     logger.add(args.log_file)

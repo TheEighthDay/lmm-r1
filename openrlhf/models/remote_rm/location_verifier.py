@@ -100,7 +100,7 @@ def standardize_region_name(region):
     region = region.lower().strip()
     # 移除常见的后缀
     suffixes = [
-        ' province', ' sheng', ' län', ' oblast', ' governorate',
+        ' province', ' sheng', ' län', ' oblast', ' governorate',' city',
         ' province', ' state', ' territory', ' region', ' district'
     ]
     for suffix in suffixes:
@@ -110,12 +110,33 @@ def standardize_region_name(region):
 
 def compare_region_words(pred_words, true_words):
     """
-    比较两个地区名称的单词是否一一对应
+    比较两个地区名称的单词是否匹配
+    使用 Levenshtein 距离，如果两个单词的距离小于3，则认为匹配
     """
-    if len(pred_words) != len(true_words):
+    if not pred_words or not true_words:
         return False
-    # 将两个列表排序后比较
-    return sorted(pred_words) == sorted(true_words)
+        
+    # 记录已匹配的单词，避免重复匹配
+    matched_true_words = set()
+    
+    # 对每个预测的单词
+    for pred_word in pred_words:
+        found_match = False
+        # 在真实单词中寻找匹配
+        for i, true_word in enumerate(true_words):
+            if i in matched_true_words:
+                continue
+            # 如果 Levenshtein 距离小于3，认为匹配
+            if Levenshtein.distance(pred_word, true_word) < 3:
+                matched_true_words.add(i)
+                found_match = True
+                break
+        # 如果当前预测单词没有找到匹配，返回False
+        if not found_match:
+            return False
+            
+    # 检查是否所有真实单词都被匹配
+    return len(matched_true_words) == len(true_words)
 
 def verify_location(content, sol):
     """
@@ -124,7 +145,7 @@ def verify_location(content, sol):
         content: 模型的输出，格式为 <think>...</think><answer>$country,region$</answer>
         sol: 真实答案，格式为 $country,region$
     Returns:
-        float: 1.0 如果完全匹配，0.1 如果国家匹配但地区不匹配，0.0 如果国家不匹配
+        float: 1.0 如果完全匹配，0.0 如果国家匹配但地区不匹配，0.0 如果国家不匹配
     """
     # 提取答案部分
     answer_match = re.search(r"<answer>\$(.*?)\$</answer>", content)
@@ -151,23 +172,14 @@ def verify_location(content, sol):
     true_region = standardize_region_name(true_region)
     
     # 将地区名称分割成单词
-    pred_words = pred_region.split()
-    true_words = true_region.split()
+    pred_words = [ x.strip() for x in pred_region.split()]
+    true_words = [ x.strip() for x in true_region.split()]
     
     # 如果单词完全匹配（顺序无关），返回1.0
     if compare_region_words(pred_words, true_words):
         return 1.0
     
-    # 如果单词不完全匹配，使用 Levenshtein 距离进行模糊匹配 
-    region_similarity = Levenshtein.ratio(pred_region, true_region)
-    
-    # 设置相似度阈值
-    SIMILARITY_THRESHOLD = 0.9
-    
-    # 如果地区相似度超过阈值，返回1.0，否则返回0.1
-    if region_similarity >= SIMILARITY_THRESHOLD:
-        return 1.0
-    return 0.1
+    return 0.0
 
     
 
@@ -176,7 +188,6 @@ def verify_location(content, sol):
 def get_reward():
     # 获取请求中的 JSON 数据
     data = request.get_json()
-    print("tkbdebug",data)
     # 检查是否有 'query' 字段
     if "query" not in data:
         return jsonify({"error": "queries field is required"}), 400
