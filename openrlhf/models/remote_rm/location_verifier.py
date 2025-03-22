@@ -111,7 +111,7 @@ def standardize_region_name(region):
 def compare_region_words(pred_words, true_words):
     """
     比较两个地区名称的单词是否匹配
-    使用 Levenshtein 距离，如果两个单词的距离小于3，则认为匹配
+    使用 Levenshtein 距离，如果两个单词的距离小于3，则认为匹配(有些地区因为发音不一样，存在1-2个字符差异)
     """
     if not pred_words or not true_words:
         return False
@@ -143,7 +143,7 @@ def verify_location(content, sol):
     验证位置信息的正确性
     Args:
         content: 模型的输出，格式为 <think>...</think><answer>$country,region$</answer>
-        sol: 真实答案，格式为 $country,region$
+        sol: 真实答案，格式为 $country,region1/region2/region3$，其中 region1/region2/region3 是同一个地区的不同别名
     Returns:
         float: 1.0 如果完全匹配，0.0 如果国家匹配但地区不匹配，0.0 如果国家不匹配
     """
@@ -159,7 +159,7 @@ def verify_location(content, sol):
     # 分割国家和行政区
     try:
         pred_country, pred_region = [x.strip().lower() for x in answer.split(',')]
-        true_country, true_region = [x.strip().lower() for x in sol.split(',')]
+        true_country, true_regions = [x.strip().lower() for x in sol.split(',')]
     except ValueError:
         return 0.0
     
@@ -167,17 +167,20 @@ def verify_location(content, sol):
     if pred_country != true_country:
         return 0.0
     
-    # 标准化地区名称
+    # 标准化预测的地区名称
     pred_region = standardize_region_name(pred_region)
-    true_region = standardize_region_name(true_region)
     
-    # 将地区名称分割成单词
-    pred_words = [ x.strip() for x in pred_region.split()]
-    true_words = [ x.strip() for x in true_region.split()]
+    # 将预测的地区名称分割成单词
+    pred_words = [x.strip() for x in pred_region.split()]
     
-    # 如果单词完全匹配（顺序无关），返回1.0
-    if compare_region_words(pred_words, true_words):
-        return 1.0
+    # 检查预测的地区是否匹配任何一个真实地区别名
+    for true_region in true_regions.split('/'):
+        true_region = standardize_region_name(true_region)
+        true_words = [x.strip() for x in true_region.split()]
+        
+        # 如果单词匹配，返回1.0
+        if compare_region_words(pred_words, true_words):
+            return 1.0
     
     return 0.0
 
