@@ -253,7 +253,7 @@ if __name__ == "__main__":
         else:
             raise ValueError(f"Unsupported file format for dataset: {dataset_path}")
 
-    format_pattern = r"^<think>(?:(?!</think>).)*</think><answer>(?:(?!</answer>).)*</answer>\Z"
+    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>\Z"
 
     if args.prompt_template=="chatml":
         problem_pattern = r"<\|im_start\|>user\n(.*?)<\|im_end\|>"
