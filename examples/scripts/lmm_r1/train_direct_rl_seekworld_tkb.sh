@@ -6,7 +6,7 @@
 # Base paths - MODIFY THESE
 export EXPERIMENT_NAME="experiments_4e7_hard"
 export WORKSPACE_DIR="/data/phd/tiankaibin/${EXPERIMENT_NAME}"                      # Path to project root directory
-export DATASET_PATH="/data/phd/tiankaibin/dataset/data/qwen_format/train.jsonl"  # Path to your dataset
+export DATASET_PATH="/data/phd/tiankaibin/dataset/data/qwen_format/train_hard.jsonl"  # Path to your dataset
 export PRETRAIN_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"  # Path to pretrained model
 export SAVE_PATH="/data/phd/tiankaibin/${EXPERIMENT_NAME}/checkpoints"                   # Path to save checkpoints
 
