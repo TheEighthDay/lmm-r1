@@ -180,7 +180,7 @@ def verify_location(content, sol):
         
         # 如果单词匹配，返回1.0
         if compare_region_words(pred_words, true_words):
-            return 1.0
+            return 2.0
     
     return 0.0
 
@@ -201,9 +201,9 @@ def get_think_length_reward(content):
     if length < 100:
         return 0.0
     elif 100 <= length <= 200:
-        return 0.5
+        return 0.2
     else:
-        return 1.0
+        return 0.5
 
 @app.route("/get_reward", methods=["POST"])
 def get_reward():
