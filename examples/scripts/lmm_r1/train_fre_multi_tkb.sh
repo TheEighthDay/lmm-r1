@@ -4,14 +4,13 @@
 # =========================================================
 
 # Base paths - MODIFY THESE
-export EXPERIMENT_NAME="experiments_seekworld"
-export WORKSPACE_DIR="/data/phd/tiankaibin/${EXPERIMENT_NAME}"                      # Path to project root directory
-export DATASET_PATH="/data/phd/tiankaibin/dataset/data/qwen_format_v3/train.jsonl"  # Path to your dataset
+export WORKSPACE_DIR="$(pwd)/experiments_multi"                      # Path to project root directory
+export DATASET_PATH="/data/phd/tiankaibin/dataset/mathv60k_message.jsonl"   # Path to your dataset
 export PRETRAIN_MODEL_PATH="Qwen/Qwen2.5-VL-7B-Instruct"  # Path to pretrained model
-export SAVE_PATH="/data/phd/tiankaibin/${EXPERIMENT_NAME}/checkpoints"                   # Path to save checkpoints
+export SAVE_PATH="$(pwd)/experiments_multi/checkpoints"                   # Path to save checkpoints
 
 # Model configuration
-export MODEL_NAME="lmm-r1-seekworld"              # Name for this training run
+export MODEL_NAME="lmm-r1-multi"              # Name for this training run
 
 # Wandb configuration (optional)
 export WANDB_DIR="${WORKSPACE_DIR}"                # Directory for wandb files
@@ -37,7 +36,7 @@ mkdir -p "${CUR_LOG_DIR}"
 
 # Print help information
 echo "================================================================"
-echo "LMM-R1 Direct RL Geometry Training"
+echo "LMM-R1 FRE-Multi Training"
 echo "================================================================"
 echo "Model name: ${MODEL_NAME}"
 echo "Dataset: ${DATASET_PATH}"
@@ -55,7 +54,7 @@ ray start --head --node-ip-address 0.0.0.0 --num-gpus 8 --temp-dir ~/.cache/ray
 
 # Start remote reward model server
 echo "Starting remote reward model server..."
-python -m openrlhf.models.remote_rm.location_verifier \
+python -m openrlhf.models.remote_rm.math_verifier \
     --dataset "${DATASET_PATH}" \
     --input_key message \
     --prompt-template chatml 2>&1 | tee -a "${CUR_LOG_DIR}/remote_rm.log" &
@@ -96,7 +95,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --advantage_estimator reinforce_baseline \
    --zero_stage 3 \
    --bf16 \
-   --actor_learning_rate 4e-7 \
+   --actor_learning_rate 1e-6 \
    --init_kl_coef 0.001 \
    --prompt_data ${DATASET_PATH} \
    --input_key message \
