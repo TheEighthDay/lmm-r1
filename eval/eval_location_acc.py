@@ -4,6 +4,7 @@ import torch
 import re
 import sys
 import time
+import argparse
 from tqdm import tqdm
 from datetime import datetime
 from PIL import Image
@@ -154,13 +155,12 @@ def extract_answer(response):
         return answer_match.group(1).strip()
     return None
 
-def evaluate_location_accuracy():
+def evaluate_location_accuracy(model_name, mode, test_file=None):
     """评估位置识别准确率"""
     # 设置日志
     log_file = setup_logger()
     
     # 加载模型和处理器
-    model_name = "Qwen/Qwen2.5-VL-7B-Instruct"
     print(f"加载模型: {model_name}")
     
     processor = AutoProcessor.from_pretrained(model_name)
@@ -169,7 +169,8 @@ def evaluate_location_accuracy():
     )
     
     # 加载测试数据
-    test_file = "raw_data_collection/data/qwen_format_v3/test.jsonl"
+    if test_file is None:
+        test_file = "raw_data_collection/data/qwen_format_v3/test.jsonl"
     print(f"加载测试数据: {test_file}")
     data = load_jsonl(test_file)
     
@@ -303,7 +304,11 @@ def evaluate_location_accuracy():
             # 处理每个回答
             for response, image_path, ground_truth, item in zip(responses, batch_image_paths, batch_ground_truths, batch_items):
                 # 构建用于验证的完整响应
-                verification_content = "<answer>" + response + "</answer>"
+                if mode == "SFT":
+                    verification_content = "<answer>" + response + "</answer>"
+                else:
+                    verification_content = response
+
                 
                 # 使用location_verifier中的验证函数
                 score = verify_location(verification_content, ground_truth)
@@ -375,6 +380,26 @@ def evaluate_location_accuracy():
     return accuracy
 
 if __name__ == "__main__":
+    # 设置命令行参数
+    parser = argparse.ArgumentParser(description='评估模型位置识别准确率')
+    parser.add_argument('--model_name', type=str, default="Qwen/Qwen2.5-VL-7B-Instruct",
+                        help='模型名称或路径')
+    parser.add_argument('--mode', type=str, default="default", choices=["SFT", "default"],
+                        help='验证模式: SFT 或 default')
+    parser.add_argument('--test_file', type=str, default=None,
+                        help='测试数据文件路径')
+    
+    args = parser.parse_args()
+    
     print("\n开始位置识别准确率评估...")
-    accuracy = evaluate_location_accuracy()
+    print(f"模型: {args.model_name}")
+    print(f"模式: {args.mode}")
+    if args.test_file:
+        print(f"测试文件: {args.test_file}")
+    
+    accuracy = evaluate_location_accuracy(
+        model_name=args.model_name,
+        mode=args.mode,
+        test_file=args.test_file
+    )
     print(f"最终准确率: {accuracy:.2%}") 
