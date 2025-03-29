@@ -167,10 +167,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None):
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         model_name, torch_dtype="auto", device_map="cuda:0"
     )
-    
-    # 加载测试数据
-    if test_file is None:
-        test_file = "raw_data_collection/data/qwen_format_v3/test.jsonl"
+
     print(f"加载测试数据: {test_file}")
     data = load_jsonl(test_file)
     
@@ -384,9 +381,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='评估模型位置识别准确率')
     parser.add_argument('--model_name', type=str, default="Qwen/Qwen2.5-VL-7B-Instruct",
                         help='模型名称或路径')
-    parser.add_argument('--mode', type=str, default="default", choices=["SFT", "default"],
+    parser.add_argument('--mode', type=str, default="default", choices=["SFT", "ZERO","RL"],
                         help='验证模式: SFT 或 default')
-    parser.add_argument('--test_file', type=str, default=None,
+    parser.add_argument('--test_file', type=str, default="qwen_format_v3/test.jsonl",
                         help='测试数据文件路径')
     
     args = parser.parse_args()
