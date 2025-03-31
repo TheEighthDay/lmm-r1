@@ -1,0 +1,368 @@
+import json
+import os
+import torch
+from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
+from qwen_vl_utils import process_vision_info
+from tqdm import tqdm
+import time
+import re
+import sys
+import argparse
+from PIL import Image
+from datetime import datetime
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from gpt4o import make_request
+
+
+COT = '''Question1:Arethereprominent natural features, such as specific types of vegetation, landforms (e.g., mountains, hills, plains), or soil characteristics, that provide clues about the geographicalregion? • Question2: Are there any culturally, historically, or architecturally significant landmarks, buildings, or structures, or are there any inscriptions or signs in a specific language or script that could help determine the country or region? • Question3: Are there distinctive road-related features, such as traffic direction (e.g., left-hand or righthand driving), specific types of bollards, unique utility pole designs, or license platecolors and styles, which countries are known to have these characteristics? • Question4: Are there observable urban or rural markers (e.g., street signs, fire hydrants guideposts) , or other infrastructure elements, that can provide more specific information about the country or city? • Question5: Are there identifiable patterns in sidewalks (e.g., tile shapes, colors, or arrangements), clothing styles worn by people, or other culturally specific details that can help narrow down the city or area? Let's think step by step. Based on the question I provided, locate the location of the picture as accurately as possible.
+'''
+
+def setup_logger(output_prefix=None):
+    """设置日志记录器"""
+    # 创建logs目录
+    os.makedirs('logs', exist_ok=True)
+    
+    # 生成日志文件名
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    if output_prefix:
+        log_file = f'logs/{output_prefix}_analysis.log'
+    else:
+        log_file = f'logs/analysis_{timestamp}.log'
+    
+    # 创建日志文件
+    with open(log_file, 'w', encoding='utf-8') as f:
+        f.write(f"分析开始时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+    
+    return log_file
+
+def log_result(log_file, image_path, prediction, ground_truth, score, raw_data, error_type=None):
+    """记录分析结果"""
+    with open(log_file, 'a', encoding='utf-8') as f:
+        f.write(f"图片路径: {image_path}\n")
+        f.write(f"预测结果: {prediction}\n")
+        f.write(f"真实结果: {ground_truth}\n")
+        f.write(f"是否匹配: {'是' if score == 1.0 else '否'}\n")
+        if error_type:
+            f.write(f"错误类型: {error_type}\n")
+        f.write("原始数据:\n")
+        f.write(json.dumps(raw_data, ensure_ascii=False, indent=2))
+        f.write("\n" + "="*50 + "\n\n")
+
+def verify_location_with_gpt4o(pred_answer, true_answer):
+    # 如果不在列表中，使用 GPT4O 进行验证
+    prompt = f"""请判断以下两个位置是否指的是同一个地方，要求1. 国家（country）2. 行政省份/州（administrative_area_level_1），完全一致才算同一个地方，真实位置中如果administrative_area_level_1存在多个别名，用/分隔，只要有一个正确就行：
+预测位置：{pred_answer}
+真实位置：{true_answer}
+
+分析原因，最后回答 [是] 或 [否]。 注意[是] 和 [否] 是用[]括起来的。"""
+    
+    try:
+        response = make_request(prompt=prompt)
+        answer = response['response'].strip()
+        return 1.0 if "[是]" in answer and "[否]" not in answer else 0.0
+    except Exception as e:
+        print(f"GPT4O 验证出错: {str(e)}")
+        return 0.0
+
+def load_jsonl(file_path):
+    """加载JSONL文件"""
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            data.append(json.loads(line))
+    return data
+
+def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct", 
+                 test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
+                 batch_size=8,
+                 output_prefix=None,
+                 output_file=None,
+                 cot=None):
+    """分析模型效果"""
+    # 设置日志
+    log_file = setup_logger(output_prefix)
+    
+    # 加载模型和处理器
+    print(f"加载模型: {model_name}")
+    processor = AutoProcessor.from_pretrained(model_name)
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_name, torch_dtype="auto", device_map="cuda:0"
+    )
+    
+    # 加载测试数据
+    print(f"加载测试数据: {test_file}")
+    data = load_jsonl(test_file)
+    
+    # 统计结果
+    total = len(data)
+    correct = 0
+    wrong = 0
+    
+    # 记录所有案例
+    all_cases = []
+    
+    # 批量处理
+    print(f"使用批处理大小: {batch_size}")
+    for i in tqdm(range(0, len(data), batch_size), desc="评估进度"):
+        batch_data = data[i:i + batch_size]
+        batch_messages = []
+        batch_image_paths = []
+        batch_items = []
+        
+        # 准备批次数据
+        for item in batch_data:
+            # 解析消息
+            message = json.loads(item['message'])
+            image_path = message[1]['content'][0]['image']
+            
+            if not os.path.exists(image_path):
+                print(f"图像文件不存在: {image_path}")
+                wrong += 1
+                all_cases.append({
+                    'image': image_path,
+                    'prediction': '图像文件不存在',
+                    'ground_truth': item['answer'],
+                    'is_correct': False,
+                    'error_type': 'file_not_found'
+                })
+                # 记录结果
+                log_result(log_file, image_path, '图像文件不存在', item['answer'], 0.0, item, 'file_not_found')
+                continue
+                
+            try:
+                image = Image.open(image_path)
+            except Exception as e:
+                print(f"加载图像失败: {image_path}, 错误: {str(e)}")
+                wrong += 1
+                all_cases.append({
+                    'image': image_path,
+                    'prediction': f'加载图像失败: {str(e)}',
+                    'ground_truth': item['answer'],
+                    'is_correct': False,
+                    'error_type': 'image_load_error'
+                })
+                # 记录结果
+                log_result(log_file, image_path, f'加载图像失败: {str(e)}', item['answer'], 0.0, item, 'image_load_error')
+                continue
+            
+            # 构建消息
+            if not cot:
+                messages = [
+                    {
+                        "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "image": image,
+                        },
+                        {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。"},
+                    ],
+                    }
+                ]
+            else:
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "image", "image": image},
+                            {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。"},
+                        ],
+                    }
+                ]
+
+            batch_messages.append(messages)
+            batch_image_paths.append(image_path)
+            batch_items.append(item)
+        
+        if not batch_messages:
+            continue
+            
+        # 批量生成回答
+        try:
+            # 准备输入
+            texts = [processor.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            ) for messages in batch_messages]
+            
+            image_inputs, video_inputs = process_vision_info(batch_messages)
+            inputs = processor(
+                text=texts,
+                images=image_inputs,
+                videos=video_inputs,
+                padding=True,
+                return_tensors="pt",
+            )
+            
+            # 确保所有输入都在 cuda:0 上
+            inputs = {k: v.to("cuda:0") if hasattr(v, 'to') else v for k, v in inputs.items()}
+            
+            # 生成回答
+            with torch.no_grad():
+                generated_ids = model.generate(
+                    **inputs, 
+                    max_new_tokens=512
+                )
+            
+            generated_ids_trimmed = [
+                out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs['input_ids'], generated_ids)
+            ]
+            responses = processor.batch_decode(
+                generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+            )
+            
+            # 处理每个回答
+            for response, image_path, item in zip(responses, batch_image_paths, batch_items):
+                # 提取答案部分
+                answer_match = re.search(r"<answer>(.*?)</answer>", response)
+                if not answer_match:
+                    wrong += 1
+                    all_cases.append({
+                        'image': image_path,
+                        'prediction': response,
+                        'ground_truth': item['answer'],
+                        'is_correct': False,
+                        'error_type': 'no_answer_tag'
+                    })
+                    # 记录结果
+                    log_result(log_file, image_path, response, item['answer'], 0.0, item, 'no_answer_tag')
+                    continue
+                    
+                # 清理答案中的空格
+                if answer_match:
+                    pred_answer = answer_match.group(1).strip()
+                else:
+                    pred_answer = response
+                
+                # 使用 GPT4O 验证位置是否匹配
+                score = verify_location_with_gpt4o(pred_answer, item['answer'])
+                
+                # 记录结果
+                error_type = None if score == 1.0 else 'location_mismatch'
+                log_result(log_file, image_path, response, item['answer'], score, item, error_type)
+                
+                # 统计结果
+                if score == 1.0:
+                    correct += 1
+                    all_cases.append({
+                        'image': image_path,
+                        'prediction': response,
+                        'ground_truth': item['answer'],
+                        'is_correct': True,
+                        'error_type': None
+                    })
+                else:
+                    wrong += 1
+                    all_cases.append({
+                        'image': image_path,
+                        'prediction': response,
+                        'ground_truth': item['answer'],
+                        'is_correct': False,
+                        'error_type': 'location_mismatch'
+                    })
+                
+        except Exception as e:
+            print(f"模型推理失败: {str(e)}")
+            for image_path, item in zip(batch_image_paths, batch_items):
+                wrong += 1
+                all_cases.append({
+                    'image': image_path,
+                    'prediction': f'模型推理失败: {str(e)}',
+                    'ground_truth': item['answer'],
+                    'is_correct': False,
+                    'error_type': 'model_inference_error'
+                })
+                # 记录结果
+                log_result(log_file, image_path, f'模型推理失败: {str(e)}', item['answer'], 0.0, item, 'model_inference_error')
+        
+        # 清理GPU缓存，避免内存泄漏
+        torch.cuda.empty_cache()
+    
+    # 计算准确率
+    accuracy = correct / total if total > 0 else 0
+    
+    # 打印统计结果
+    print(f"\n总样本数: {total}")
+    print(f"正确样本数: {correct} ({accuracy:.2%})")
+    print(f"错误样本数: {wrong} ({(1-accuracy):.2%})")
+    
+    # 保存所有案例
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    cases_file = f'logs/all_cases_{timestamp}.json'
+    if output_prefix:
+        cases_file = f'logs/{output_prefix}_cases.json'
+    
+    with open(cases_file, 'w', encoding='utf-8') as f:
+        json.dump(all_cases, f, ensure_ascii=False, indent=2)
+    print(f"\n所有案例已保存到: {cases_file}")
+    
+    # 记录分析结束时间
+    with open(log_file, 'a', encoding='utf-8') as f:
+        f.write(f"\n分析结束时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"总样本数: {total}\n")
+        f.write(f"正确数: {correct} ({correct/total*100:.2f}%)\n")
+        f.write(f"错误数: {wrong} ({wrong/total*100:.2f}%)\n")
+
+    # 如果指定了输出文件，保存结果
+    if output_file:
+        output_data = {
+            "accuracy": float(accuracy),
+            "total_samples": total,
+            "correct_samples": correct,
+            "wrong_samples": wrong,
+            "model_name": model_name,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "detailed_results": all_cases
+        }
+        
+        # 确保目录存在
+        os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
+        
+        # 保存到输出文件
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, ensure_ascii=False, indent=2)
+        print(f"\n结果详情已保存到: {output_file}")
+
+    return accuracy
+
+if __name__ == "__main__":
+    # 设置命令行参数
+    parser = argparse.ArgumentParser(description='评估模型位置识别准确率')
+    parser.add_argument('--model_name', type=str, default="Qwen/Qwen2.5-VL-7B-Instruct",
+                        help='模型名称或路径')
+    parser.add_argument('--test_file', type=str, default="/data/phd/tiankaibin/dataset/data/test.jsonl",
+                        help='测试数据文件路径')
+    parser.add_argument('--batch_size', type=int, default=8,
+                        help='批处理大小，较大的值可以加速推理')
+    parser.add_argument('--output_prefix', type=str, default=None,
+                        help='输出文件前缀')
+    parser.add_argument('--output_file', type=str, default=None,
+                        help='结果文件路径，用于保存准确率和预测结果')
+    parser.add_argument('--cot', action='store_true',
+                        help='是否使用推理提示')
+    
+    args = parser.parse_args()
+    
+    print("\n开始运行完整分析...")
+    print(f"模型: {args.model_name}")
+    print(f"批处理大小: {args.batch_size}")
+    
+    # 设置GPU内存限制
+    if torch.cuda.is_available():
+        # 清理缓存
+        torch.cuda.empty_cache()
+        # 设置内存使用率为0.8
+        torch.cuda.set_per_process_memory_fraction(0.8)
+    
+    analyze_model(
+        model_name=args.model_name,
+        test_file=args.test_file,
+        batch_size=args.batch_size,
+        output_prefix=args.output_prefix,
+        output_file=args.output_file,
+        cot=COT if args.cot else None
+    )
+
+# 使用示例:
+# CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot
+
