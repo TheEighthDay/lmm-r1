@@ -9,7 +9,7 @@ from tqdm import tqdm
 from datetime import datetime
 from PIL import Image
 import Levenshtein
-from gpt4o import make_request
+from gpt4o_mini import make_request
 
 # 导入调试工具
 try:
@@ -216,7 +216,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
     print(f"批处理大小: {batch_size}")
     
     # 根据选择的推理引擎加载模型
-    processor = AutoProcessor.from_pretrained(model_name)
+    processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
     
     if inference_engine == "vllm":
         if not vllm_available:
@@ -227,7 +227,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
             model=model_name,
             limit_mm_per_prompt={"image": 10, "video": 10},
             dtype="auto",
-            gpu_memory_utilization=0.5,
+            gpu_memory_utilization=0.8,
         )
         
         # 设置采样参数
@@ -483,6 +483,9 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
             
             # 处理每个回答（统一处理逻辑）
             for response, image_path, ground_truth, item in zip(responses, batch_image_paths, batch_ground_truths, batch_items):
+                print("__________________________")
+                print(response)
+                print("__________________________")
                 # 构建用于验证的完整响应
                 if mode == "SFT":
                     verification_content = "<answer>" + response + "</answer>"
@@ -650,5 +653,7 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json &
 # CUDA_VISIBLE_DEVICES=1  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot &
-# CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json &
-# CUDA_VISIBLE_DEVICES=3 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result.json &
+# CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json &
+# CUDA_VISIBLE_DEVICES=3 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result.json &
+
+

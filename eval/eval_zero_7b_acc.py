@@ -11,11 +11,34 @@ import argparse
 from PIL import Image
 from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from gpt4o import make_request
+from gpt4o_mini import make_request
 
+# 条件导入，根据选择的推理引擎
+try:
+    from vllm import LLM, SamplingParams
+    vllm_available = True
+except ImportError:
+    vllm_available = False
 
-COT = '''Question1:Arethereprominent natural features, such as specific types of vegetation, landforms (e.g., mountains, hills, plains), or soil characteristics, that provide clues about the geographicalregion? • Question2: Are there any culturally, historically, or architecturally significant landmarks, buildings, or structures, or are there any inscriptions or signs in a specific language or script that could help determine the country or region? • Question3: Are there distinctive road-related features, such as traffic direction (e.g., left-hand or righthand driving), specific types of bollards, unique utility pole designs, or license platecolors and styles, which countries are known to have these characteristics? • Question4: Are there observable urban or rural markers (e.g., street signs, fire hydrants guideposts) , or other infrastructure elements, that can provide more specific information about the country or city? • Question5: Are there identifiable patterns in sidewalks (e.g., tile shapes, colors, or arrangements), clothing styles worn by people, or other culturally specific details that can help narrow down the city or area? Let's think step by step. Based on the question I provided, locate the location of the picture as accurately as possible.
+COT_GROLOC = '''
+Question1: Are the reprominent natural features, such as specific types of vegetation, landforms (e.g., mountains, hills, plains), or soil characteristics, that provide clues about the geographical region? 
+Question2: Are there any culturally, historically, or architecturally significant landmarks, buildings, or structures, or are there any inscriptions or signs in a specific language or script that could help determine the country or region? 
+Question3: Are there distinctive road-related features, such as traffic direction (e.g., left-hand or right hand driving), specific types of bollards, unique utility pole designs, or license plate colors and styles, which countries are known to have these characteristics? 
+Question4: Are there observable urban or rural markers (e.g., street signs, fire hydrants guideposts) , or other infrastructure elements, that can provide more specific information about the country or city? 
+Question5: Are there identifiable patterns in sidewalks (e.g., tile shapes, colors, or arrangements), clothing styles worn by people, or other culturally specific details that can help narrow down the city or area?
+
+Let's think step by step. Based on the question I provided, locate the location of the picture as accurately as possible. For example: the presence of tropical rainforests, palm trees, and red soil indicates a tropical climate... Signs in Thai, right-side traffic, and traditional Thai architecture further suggest it is in Thailand... Combining these clues, this image was likely taken in a city in Bangkok, Thailand, Asia.
+Therefore, the answer is:
+<answer>$thailand,bangkok$</answer>
 '''
+
+COT = '''
+Let's think step by step. Locate the location of the picture as accurately as possible. For example: the presence of tropical rainforests, palm trees, and red soil indicates a tropical climate... Signs in Thai, right-side traffic, and traditional Thai architecture further suggest it is in Thailand... Combining these clues, this image was likely taken in a city in Bangkok, Thailand, Asia.
+Therefore, the answer is:
+<answer>$thailand,bangkok$</answer>
+'''
+
+
 
 def setup_logger(output_prefix=None):
     """设置日志记录器"""
@@ -101,17 +124,41 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                  batch_size=8,
                  output_prefix=None,
                  output_file=None,
-                 cot=None):
+                 cot=None,
+                 inference_engine="vllm"):
     """分析模型效果"""
     # 设置日志
     log_file = setup_logger(output_prefix)
     
     # 加载模型和处理器
     print(f"加载模型: {model_name}")
-    processor = AutoProcessor.from_pretrained(model_name)
-    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-        model_name, torch_dtype="auto", device_map="cuda:0"
-    )
+    print(f"推理引擎: {inference_engine}")
+    processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
+    
+    if inference_engine == "vllm":
+        if not vllm_available:
+            raise ImportError("vLLM 库不可用，请安装 vllm 或选择 transformers 引擎")
+        
+        # 使用vLLM加载模型
+        llm = LLM(
+            model=model_name,
+            limit_mm_per_prompt={"image": 10, "video": 10},
+            dtype="auto",
+            gpu_memory_utilization=0.8,
+        )
+        
+        # 设置采样参数
+        sampling_params = SamplingParams(
+            temperature=0.7,
+            top_p=0.8,
+            repetition_penalty=1.05,
+            max_tokens=512,
+            stop_token_ids=[],
+        )
+    else:
+        model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+            model_name, torch_dtype="auto", device_map="cuda:0"
+        )
     
     # 加载测试数据
     print(f"加载测试数据: {test_file}")
@@ -132,6 +179,9 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
         batch_messages = []
         batch_image_paths = []
         batch_items = []
+        
+        if inference_engine == "vllm":
+            batch_inputs = []
         
         # 准备批次数据
         for item in batch_data:
@@ -174,13 +224,13 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 messages = [
                     {
                         "role": "user",
-                    "content": [
-                        {
-                            "type": "image",
-                            "image": image,
-                        },
-                        {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。"},
-                    ],
+                        "content": [
+                            {
+                                "type": "image",
+                                "image": image,
+                            },
+                            {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
+                        ],
                     }
                 ]
             else:
@@ -189,11 +239,33 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                         "role": "user",
                         "content": [
                             {"type": "image", "image": image},
-                            {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。"},
+                            {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
                         ],
                     }
                 ]
 
+            if inference_engine == "vllm":
+                # 处理消息为vLLM格式
+                prompt = processor.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                )
+                
+                # 处理图像数据
+                image_inputs, video_inputs = process_vision_info(messages)
+                
+                mm_data = {}
+                if image_inputs is not None:
+                    mm_data["image"] = image_inputs
+                
+                # 构建vLLM输入
+                llm_input = {
+                    "prompt": prompt,
+                    "multi_modal_data": mm_data,
+                }
+                batch_inputs.append(llm_input)
+            
             batch_messages.append(messages)
             batch_image_paths.append(image_path)
             batch_items.append(item)
@@ -203,39 +275,53 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             
         # 批量生成回答
         try:
-            # 准备输入
-            texts = [processor.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
-            ) for messages in batch_messages]
+            responses = []
             
-            image_inputs, video_inputs = process_vision_info(batch_messages)
-            inputs = processor(
-                text=texts,
-                images=image_inputs,
-                videos=video_inputs,
-                padding=True,
-                return_tensors="pt",
-            )
-            
-            # 确保所有输入都在 cuda:0 上
-            inputs = {k: v.to("cuda:0") if hasattr(v, 'to') else v for k, v in inputs.items()}
-            
-            # 生成回答
-            with torch.no_grad():
-                generated_ids = model.generate(
-                    **inputs, 
-                    max_new_tokens=512
+            if inference_engine == "vllm":
+                # 使用vLLM进行推理
+                outputs = llm.generate(batch_inputs, sampling_params=sampling_params)
+                
+                # 提取生成的文本
+                for output in outputs:
+                    responses.append(output.outputs[0].text)
+                    
+            else:
+                # 准备输入
+                texts = [processor.apply_chat_template(
+                    messages, tokenize=False, add_generation_prompt=True
+                ) for messages in batch_messages]
+                
+                image_inputs, video_inputs = process_vision_info(batch_messages)
+                inputs = processor(
+                    text=texts,
+                    images=image_inputs,
+                    videos=video_inputs,
+                    padding=True,
+                    return_tensors="pt",
                 )
-            
-            generated_ids_trimmed = [
-                out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs['input_ids'], generated_ids)
-            ]
-            responses = processor.batch_decode(
-                generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
-            )
+                
+                # 确保所有输入都在 cuda:0 上
+                inputs = {k: v.to("cuda:0") if hasattr(v, 'to') else v for k, v in inputs.items()}
+                
+                # 生成回答
+                with torch.no_grad():
+                    generated_ids = model.generate(
+                        **inputs, 
+                        max_new_tokens=512
+                    )
+                
+                generated_ids_trimmed = [
+                    out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs['input_ids'], generated_ids)
+                ]
+                responses = processor.batch_decode(
+                    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+                )
             
             # 处理每个回答
             for response, image_path, item in zip(responses, batch_image_paths, batch_items):
+                print("__________________________")
+                print(response)
+                print("__________________________")
                 # 提取答案部分
                 answer_match = re.search(r"<answer>(.*?)</answer>", response)
                 if not answer_match:
@@ -335,6 +421,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             "correct_samples": correct,
             "wrong_samples": wrong,
             "model_name": model_name,
+            "inference_engine": inference_engine,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "detailed_results": all_cases
         }
@@ -364,12 +451,15 @@ if __name__ == "__main__":
                         help='结果文件路径，用于保存准确率和预测结果')
     parser.add_argument('--cot', action='store_true',
                         help='是否使用推理提示')
+    parser.add_argument('--inference_engine', type=str, default="vllm", choices=["vllm", "transformers"],
+                        help='推理引擎: vllm 或 transformers')
     
     args = parser.parse_args()
     
     print("\n开始运行完整分析...")
     print(f"模型: {args.model_name}")
     print(f"批处理大小: {args.batch_size}")
+    print(f"推理引擎: {args.inference_engine}")
     
     # 设置GPU内存限制
     if torch.cuda.is_available():
@@ -384,10 +474,14 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         output_prefix=args.output_prefix,
         output_file=args.output_file,
-        cot=COT if args.cot else None
+        cot=COT if args.cot else None,
+        inference_engine=args.inference_engine
     )
 
 # 使用示例:
-# CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json
-# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot
+# CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json --inference_engine vllm
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot --inference_engine vllm
 
+
+# CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_multi/checkpoints/lmm-r1-multi/ckpt/global_step260_hf
+# CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
