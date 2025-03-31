@@ -85,7 +85,8 @@ def verify_location_with_gpt4o(pred_answer, true_answer):
     if answer_match:
         pred_answer = answer_match.group(1).strip()
     else:
-        pred_answer = pred_answer
+        # 匹配失败时使用原始文本
+        pred_answer = pred_answer.strip()
     # 如果不在列表中，使用 GPT4O 进行验证
     prompt = f"""请判断以下两个位置是否指的是同一个地方，要求1. 国家（country）2. 行政省份/州（administrative_area_level_1），完全一致才算同一个地方，如果administrative_area_level_1存在多个别名，用/分隔，只要有一个正确就行：
 预测位置：{pred_answer}

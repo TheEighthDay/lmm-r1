@@ -49,6 +49,30 @@ def log_result(log_file, image_path, prediction, ground_truth, score, raw_data, 
         f.write("\n" + "="*50 + "\n\n")
 
 def verify_location_with_gpt4o(pred_answer, true_answer):
+    """验证位置信息是否匹配
+    
+    Args:
+        pred_answer: 预测答案，可能包含标签 <answer>...</answer>
+        true_answer: 真实答案
+        
+    Returns:
+        float: 1.0 如果匹配，0.0 如果不匹配
+    """
+    # 尝试提取 <answer> 标签中的内容
+    try:
+        answer_match = re.search(r"<answer>\$(.*?)\$</answer>", pred_answer)
+        if answer_match:
+            pred_answer = answer_match.group(1).strip()
+        else:
+            # 尝试其他可能的格式
+            answer_match = re.search(r"<answer>(.*?)</answer>", pred_answer)
+            if answer_match:
+                pred_answer = answer_match.group(1).strip()
+            # 如果没有匹配到标签，使用原始文本
+    except Exception as e:
+        print(f"提取答案时出错: {str(e)}")
+        # 使用原始文本，不进行提取
+    
     # 如果不在列表中，使用 GPT4O 进行验证
     prompt = f"""请判断以下两个位置是否指的是同一个地方，要求1. 国家（country）2. 行政省份/州（administrative_area_level_1），完全一致才算同一个地方，真实位置中如果administrative_area_level_1存在多个别名，用/分隔，只要有一个正确就行：
 预测位置：{pred_answer}
@@ -226,11 +250,12 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                     # 记录结果
                     log_result(log_file, image_path, response, item['answer'], 0.0, item, 'no_answer_tag')
                     continue
-                    
+                
                 # 清理答案中的空格
-                if answer_match:
+                try:
                     pred_answer = answer_match.group(1).strip()
-                else:
+                except Exception as e:
+                    print(f"提取答案时出错: {str(e)}")
                     pred_answer = response
                 
                 # 使用 GPT4O 验证位置是否匹配
