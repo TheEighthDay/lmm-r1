@@ -125,7 +125,8 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                  output_prefix=None,
                  output_file=None,
                  cot=None,
-                 inference_engine="vllm"):
+                 inference_engine="vllm",
+                 pipeline_parallel=False):
     """分析模型效果"""
     # 设置日志
     log_file = setup_logger(output_prefix)
@@ -133,6 +134,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
     # 加载模型和处理器
     print(f"加载模型: {model_name}")
     print(f"推理引擎: {inference_engine}")
+    print(f"Pipeline并行: {'是' if pipeline_parallel else '否'}")
     processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
     
     if inference_engine == "vllm":
@@ -140,12 +142,25 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             raise ImportError("vLLM 库不可用，请安装 vllm 或选择 transformers 引擎")
         
         # 使用vLLM加载模型
-        llm = LLM(
-            model=model_name,
-            limit_mm_per_prompt={"image": 10, "video": 10},
-            dtype="auto",
-            gpu_memory_utilization=0.8,
-        )
+        if pipeline_parallel:
+            # 设置4卡pipeline并行
+            llm = LLM(
+                model=model_name,
+                limit_mm_per_prompt={"image": 10, "video": 10},
+                dtype="auto",
+                gpu_memory_utilization=0.95,
+                tensor_parallel_size=4,  # 使用4卡
+                # pipeline_parallel_size=4,  # pipeline并行大小
+                trust_remote_code=True,
+            )
+        else:
+            llm = LLM(
+                model=model_name,
+                limit_mm_per_prompt={"image": 10, "video": 10},
+                dtype="auto",
+                gpu_memory_utilization=0.95,
+                trust_remote_code=True,
+            )
         
         # 设置采样参数
         sampling_params = SamplingParams(
@@ -324,18 +339,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 print("__________________________")
                 # 提取答案部分
                 answer_match = re.search(r"<answer>(.*?)</answer>", response)
-                if not answer_match:
-                    wrong += 1
-                    all_cases.append({
-                        'image': image_path,
-                        'prediction': response,
-                        'ground_truth': item['answer'],
-                        'is_correct': False,
-                        'error_type': 'no_answer_tag'
-                    })
-                    # 记录结果
-                    log_result(log_file, image_path, response, item['answer'], 0.0, item, 'no_answer_tag')
-                    continue
+ 
                 
                 # 清理答案中的空格
                 try:
@@ -453,6 +457,8 @@ if __name__ == "__main__":
                         help='是否使用推理提示')
     parser.add_argument('--inference_engine', type=str, default="vllm", choices=["vllm", "transformers"],
                         help='推理引擎: vllm 或 transformers')
+    parser.add_argument('--pipeline_parallel', action='store_true',
+                        help='是否使用4卡pipeline并行')
     
     args = parser.parse_args()
     
@@ -460,13 +466,14 @@ if __name__ == "__main__":
     print(f"模型: {args.model_name}")
     print(f"批处理大小: {args.batch_size}")
     print(f"推理引擎: {args.inference_engine}")
+    print(f"Pipeline并行: {'是' if args.pipeline_parallel else '否'}")
     
     # 设置GPU内存限制
     if torch.cuda.is_available():
         # 清理缓存
         torch.cuda.empty_cache()
         # 设置内存使用率为0.8
-        torch.cuda.set_per_process_memory_fraction(0.8)
+        torch.cuda.set_per_process_memory_fraction(0.95)
     
     analyze_model(
         model_name=args.model_name,
@@ -475,13 +482,17 @@ if __name__ == "__main__":
         output_prefix=args.output_prefix,
         output_file=args.output_file,
         cot=COT if args.cot else None,
-        inference_engine=args.inference_engine
+        inference_engine=args.inference_engine,
+        pipeline_parallel=args.pipeline_parallel
     )
 
 # 使用示例:
-# CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json --inference_engine vllm
-# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot --inference_engine vllm
+# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json --inference_engine vllm --pipeline_parallel 
+# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot --inference_engine vllm --pipeline_parallel
 
+# CUDA_VISIBLE_DEVICES=4,5,6,7  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen32b_eval_results.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-32B-Instruct --pipeline_parallel
 
 # CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_multi/checkpoints/lmm-r1-multi/ckpt/global_step260_hf
 # CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
+
+

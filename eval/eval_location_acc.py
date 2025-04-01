@@ -227,7 +227,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
             model=model_name,
             limit_mm_per_prompt={"image": 10, "video": 10},
             dtype="auto",
-            gpu_memory_utilization=0.8,
+            gpu_memory_utilization=0.95,
         )
         
         # 设置采样参数
@@ -650,10 +650,8 @@ if __name__ == "__main__":
 # CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json
 # CUDA_VISIBLE_DEVICES=3 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result.json
 
+# CUDA_VISIBLE_DEVICES=0 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_kl_0_train_easy1945_mid941/checkpoints/lmm-r1-seekworld-kl_0_train_easy1945_mid941 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld-kl_0_train_easy1945_mid941_RL_eval_result.json
 
-# CUDA_VISIBLE_DEVICES=0  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json &
-# CUDA_VISIBLE_DEVICES=1  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot &
-# CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json &
-# CUDA_VISIBLE_DEVICES=3 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result.json &
+# CUDA_VISIBLE_DEVICES=1 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_kl_0_train_mid941_hard941/checkpoints/lmm-r1-seekworld-kl_0_train_mid941_hard941 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld-kl_0_train_mid941_hard941_RL_eval_result.json
 
-
+# CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_kl_0_train_easy1945_mid941_hard2886/checkpoints/lmm-r1-seekworld-kl_0_train_easy1945_mid941_hard2886 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld-kl_0_train_easy1945_mid941_hard2886_RL_eval_result.json
