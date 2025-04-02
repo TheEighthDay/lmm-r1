@@ -10,6 +10,8 @@ import sys
 import argparse
 from PIL import Image
 from datetime import datetime
+import requests
+import base64
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gpt4o_mini import make_request
 
@@ -32,10 +34,16 @@ Therefore, the answer is:
 <answer>$thailand,bangkok$</answer>
 '''
 
-COT = '''
+COT_OLD = '''
 Let's think step by step. Locate the location of the picture as accurately as possible. For example: the presence of tropical rainforests, palm trees, and red soil indicates a tropical climate... Signs in Thai, right-side traffic, and traditional Thai architecture further suggest it is in Thailand... Combining these clues, this image was likely taken in a city in Bangkok, Thailand, Asia.
 Therefore, the answer is:
 <answer>$thailand,bangkok$</answer>
+'''
+
+COT = '''
+Let's think step by step. Locate the location of the picture as accurately as possible. 
+Please perform forensic-level detail analysis on the image: First, systematically scan all visual elements including but not limited to architectural styles (roof shapes, materials, color schemes), vegetation types (tree species morphology, leaf characteristics), climate indicators (light angle, cloud formations, precipitation traces), traffic signs (road sign languages, symbol standards, vehicle models), textual information (signage fonts, language characters, regional abbreviations), and geographical features (mountain ranges, water body formations, soil coloration). Then construct an element correlation network: e.g., matching vegetation distribution with climate zones, aligning architectural designs with local cultural patterns, and comparing traffic sign standards against international norms. Pay special attention to microscopic clues: insect species, lichen growth orientation, satellite dish elevation angles, power grid voltage markings. After cross-verification to eliminate contradictory information, compare unique feature combinations against geographical databases (e.g., specific tree species + red soil + left-hand drive vehicles + Gothic spire architecture). Finally, output conclusions based on highest-probability matches that satisfy dual verification of both physical geography and human cultural elements. 
+Finally, a guess answer must be given as: <answer>$South Africa, Western Cape Province$</answer>
 '''
 
 
@@ -119,6 +127,83 @@ def load_jsonl(file_path):
             data.append(json.loads(line))
     return data
 
+def generate_with_doubao(image_path, api_key, cot=None):
+    """使用豆包API生成预测地址
+    
+    Args:
+        image_path: 图片路径
+        api_key: 豆包API密钥
+        cot: 是否使用推理提示
+        
+    Returns:
+        str: 生成的预测地址
+    """
+    try:
+        # 读取图片并转换为base64
+        with open(image_path, 'rb') as f:
+            image_data = base64.b64encode(f.read()).decode('utf-8')
+        
+        # 构建消息
+        if not cot:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "image": image_data
+                        },
+                        {
+                            "type": "text",
+                            "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"
+                        }
+                    ]
+                }
+            ]
+        else:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "image": image_data
+                        },
+                        {
+                            "type": "text",
+                            "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n " + COT
+                        }
+                    ]
+                }
+            ]
+        
+        # 发送请求
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        response = requests.post(
+            "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+            headers=headers,
+            json={
+                "model": "doubao-1.5-vision-pro-32k-250115",
+                "messages": messages
+            }
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            return result['choices'][0]['message']['content']
+        else:
+            print(f"豆包API请求失败！状态码: {response.status_code}")
+            print(f"错误信息: {response.text}")
+            return None
+            
+    except Exception as e:
+        print(f"豆包API请求出错: {str(e)}")
+        return None
+
 def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct", 
                  test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
                  batch_size=8,
@@ -126,7 +211,8 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                  output_file=None,
                  cot=None,
                  inference_engine="vllm",
-                 pipeline_parallel=False):
+                 pipeline_parallel=False,
+                 doubao_api_key=None):
     """分析模型效果"""
     # 设置日志
     log_file = setup_logger(output_prefix)
@@ -135,45 +221,50 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
     print(f"加载模型: {model_name}")
     print(f"推理引擎: {inference_engine}")
     print(f"Pipeline并行: {'是' if pipeline_parallel else '否'}")
-    processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
     
-    if inference_engine == "vllm":
-        if not vllm_available:
-            raise ImportError("vLLM 库不可用，请安装 vllm 或选择 transformers 引擎")
+    if inference_engine == "doubao":
+        if not doubao_api_key:
+            raise ValueError("使用豆包API需要提供API密钥")
+        print("使用豆包API进行推理")
+    else:
+        processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
         
-        # 使用vLLM加载模型
-        if pipeline_parallel:
-            # 设置4卡pipeline并行
-            llm = LLM(
-                model=model_name,
-                limit_mm_per_prompt={"image": 10, "video": 10},
-                dtype="auto",
-                gpu_memory_utilization=0.95,
-                tensor_parallel_size=4,  # 使用4卡
-                # pipeline_parallel_size=4,  # pipeline并行大小
-                trust_remote_code=True,
+        if inference_engine == "vllm":
+            if not vllm_available:
+                raise ImportError("vLLM 库不可用，请安装 vllm 或选择 transformers 引擎")
+            
+            # 使用vLLM加载模型
+            if pipeline_parallel:
+                # 设置4卡pipeline并行
+                llm = LLM(
+                    model=model_name,
+                    limit_mm_per_prompt={"image": 10, "video": 10},
+                    dtype="auto",
+                    gpu_memory_utilization=0.8,
+                    pipeline_parallel_size=4,  # pipeline并行大小
+                    trust_remote_code=True,
+                )
+            else:
+                llm = LLM(
+                    model=model_name,
+                    limit_mm_per_prompt={"image": 10, "video": 10},
+                    dtype="auto",
+                    gpu_memory_utilization=0.8,
+                    trust_remote_code=True,
+                )
+            
+            # 设置采样参数
+            sampling_params = SamplingParams(
+                temperature=0.7,
+                top_p=0.8,
+                repetition_penalty=1.05,
+                max_tokens=512,
+                stop_token_ids=[],
             )
         else:
-            llm = LLM(
-                model=model_name,
-                limit_mm_per_prompt={"image": 10, "video": 10},
-                dtype="auto",
-                gpu_memory_utilization=0.95,
-                trust_remote_code=True,
+            model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                model_name, torch_dtype="auto", device_map="cuda:0"
             )
-        
-        # 设置采样参数
-        sampling_params = SamplingParams(
-            temperature=0.7,
-            top_p=0.8,
-            repetition_penalty=1.05,
-            max_tokens=512,
-            stop_token_ids=[],
-        )
-    else:
-        model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-            model_name, torch_dtype="auto", device_map="cuda:0"
-        )
     
     # 加载测试数据
     print(f"加载测试数据: {test_file}")
@@ -234,58 +325,66 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 log_result(log_file, image_path, f'加载图像失败: {str(e)}', item['answer'], 0.0, item, 'image_load_error')
                 continue
             
-            # 构建消息
-            if not cot:
-                messages = [
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "image",
-                                "image": image,
-                            },
-                            {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
-                        ],
-                    }
-                ]
+            if inference_engine == "doubao":
+                # 使用豆包API生成预测
+                response = generate_with_doubao(image_path, doubao_api_key, cot)
+                if response:
+                    responses = [response]
+                else:
+                    responses = ["豆包API请求失败"]
             else:
-                messages = [
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "image", "image": image},
-                            {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
-                        ],
-                    }
-                ]
+                # 构建消息
+                if not cot:
+                    messages = [
+                        {
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "image",
+                                    "image": image,
+                                },
+                                {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
+                            ],
+                        }
+                    ]
+                else:
+                    messages = [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "image", "image": image},
+                                {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
+                            ],
+                        }
+                    ]
 
-            if inference_engine == "vllm":
-                # 处理消息为vLLM格式
-                prompt = processor.apply_chat_template(
-                    messages,
-                    tokenize=False,
-                    add_generation_prompt=True,
-                )
+                if inference_engine == "vllm":
+                    # 处理消息为vLLM格式
+                    prompt = processor.apply_chat_template(
+                        messages,
+                        tokenize=False,
+                        add_generation_prompt=True,
+                    )
+                    
+                    # 处理图像数据
+                    image_inputs, video_inputs = process_vision_info(messages)
+                    
+                    mm_data = {}
+                    if image_inputs is not None:
+                        mm_data["image"] = image_inputs
+                    
+                    # 构建vLLM输入
+                    llm_input = {
+                        "prompt": prompt,
+                        "multi_modal_data": mm_data,
+                    }
+                    batch_inputs.append(llm_input)
                 
-                # 处理图像数据
-                image_inputs, video_inputs = process_vision_info(messages)
-                
-                mm_data = {}
-                if image_inputs is not None:
-                    mm_data["image"] = image_inputs
-                
-                # 构建vLLM输入
-                llm_input = {
-                    "prompt": prompt,
-                    "multi_modal_data": mm_data,
-                }
-                batch_inputs.append(llm_input)
-            
-            batch_messages.append(messages)
-            batch_image_paths.append(image_path)
-            batch_items.append(item)
+                batch_messages.append(messages)
+                batch_image_paths.append(image_path)
+                batch_items.append(item)
         
-        if not batch_messages:
+        if not batch_messages and inference_engine != "doubao":
             continue
             
         # 批量生成回答
@@ -293,14 +392,11 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             responses = []
             
             if inference_engine == "vllm":
-                # 使用vLLM进行推理
+
                 outputs = llm.generate(batch_inputs, sampling_params=sampling_params)
-                
-                # 提取生成的文本
-                for output in outputs:
-                    responses.append(output.outputs[0].text)
+                responses = [output.outputs[0].text for output in outputs]
                     
-            else:
+            elif inference_engine == "transformers":
                 # 准备输入
                 texts = [processor.apply_chat_template(
                     messages, tokenize=False, add_generation_prompt=True
@@ -337,17 +433,8 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 print("__________________________")
                 print(response)
                 print("__________________________")
-                # 提取答案部分
-                answer_match = re.search(r"<answer>(.*?)</answer>", response)
- 
-                
-                # 清理答案中的空格
-                try:
-                    pred_answer = answer_match.group(1).strip()
-                except Exception as e:
-                    print(f"提取答案时出错: {str(e)}")
-                    pred_answer = response
-                
+
+                pred_answer = response                
                 # 使用 GPT4O 验证位置是否匹配
                 score = verify_location_with_gpt4o(pred_answer, item['answer'])
                 
@@ -455,10 +542,12 @@ if __name__ == "__main__":
                         help='结果文件路径，用于保存准确率和预测结果')
     parser.add_argument('--cot', action='store_true',
                         help='是否使用推理提示')
-    parser.add_argument('--inference_engine', type=str, default="vllm", choices=["vllm", "transformers"],
-                        help='推理引擎: vllm 或 transformers')
+    parser.add_argument('--inference_engine', type=str, default="vllm", choices=["vllm", "transformers", "doubao"],
+                        help='推理引擎: vllm, transformers 或 doubao')
     parser.add_argument('--pipeline_parallel', action='store_true',
                         help='是否使用4卡pipeline并行')
+    parser.add_argument('--doubao_api_key', type=str, default=None,
+                        help='豆包API密钥，使用豆包API时需要提供')
     
     args = parser.parse_args()
     
@@ -483,7 +572,8 @@ if __name__ == "__main__":
         output_file=args.output_file,
         cot=COT if args.cot else None,
         inference_engine=args.inference_engine,
-        pipeline_parallel=args.pipeline_parallel
+        pipeline_parallel=args.pipeline_parallel,
+        doubao_api_key=args.doubao_api_key
     )
 
 # 使用示例:
