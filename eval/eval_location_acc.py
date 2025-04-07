@@ -650,6 +650,9 @@ if __name__ == "__main__":
 # CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json
 # CUDA_VISIBLE_DEVICES=3 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result.json
 
+# CUDA_VISIBLE_DEVICES=0 python eval_location_acc_nosystem.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result_nosystem.json
+
+
 # CUDA_VISIBLE_DEVICES=0 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_kl_0_train_easy1945_mid941/checkpoints/lmm-r1-seekworld-kl_0_train_easy1945_mid941 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld-kl_0_train_easy1945_mid941_RL_eval_result.json
 
 # CUDA_VISIBLE_DEVICES=1 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_kl_0_train_mid941_hard941/checkpoints/lmm-r1-seekworld-kl_0_train_mid941_hard941 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld-kl_0_train_mid941_hard941_RL_eval_result.json

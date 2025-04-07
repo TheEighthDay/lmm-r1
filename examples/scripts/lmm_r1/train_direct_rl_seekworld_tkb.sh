@@ -105,7 +105,7 @@ ray job submit --address="http://127.0.0.1:8265" \
    --lambd 1 \
    --gamma 1 \
    --gradient_checkpointing \
-   --save_steps 20 \
+   --save_steps 50 \
    --ckpt_path ${SAVE_PATH}/${MODEL_NAME}/ckpt \
    --save_hf_ckpt \
    --load_checkpoint \

@@ -47,8 +47,7 @@ def verify_format(content):
     """
     think_count = content.count("<think>")
     answer_count = content.count("<answer>")
-    comma_count = content.count(",")
-    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 and comma_count == 1
+    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1
 
 
 
@@ -231,7 +230,7 @@ def verify_think_process(content: str) -> float:
 推理过程：{think_content}
 最终答案：{answer_content}
 
-请仔细分析推理过程是否能够尽可能挖掘更多的细节分析并合理推导出最终答案。如果推理过程合理，能够解释为什么得出这个答案，请回答[1]；如果推理过程不合理，或者无法解释为什么得出这个答案，请回答[0]；最终答案中如果没有包含国家和一级行政单位，或者不知道，否则请回答[0]。
+请仔细分析推理过程是否能够尽可能挖掘更多的图片细节分析并合理推导出最终答案。如果推理过程合理，符合刑侦的思考，不重复啰嗦，能够解释答案的原因，请回答[1]；如果推理过程不合理，或者无法解释为什么得出这个答案，请回答[0]；最终答案中如果没有包含国家和一级行政单位，或者不知道，否则请回答[0]。
 
 请用方括号[]输出结果，例如：
 [1] 推理过程合理
@@ -349,7 +348,7 @@ if __name__ == "__main__":
         else:
             raise ValueError(f"Unsupported file format for dataset: {dataset_path}")
 
-    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>\Z"
+    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>$"
 
     if args.prompt_template=="chatml":
         problem_pattern = r"<\|im_start\|>user\n(.*?)<\|im_end\|>"

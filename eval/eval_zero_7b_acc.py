@@ -127,82 +127,109 @@ def load_jsonl(file_path):
             data.append(json.loads(line))
     return data
 
-def generate_with_doubao(image_path, api_key, cot=None):
+def generate_with_doubao(image_path, api_key, cot=None, max_retries=3, retry_delay=2):
     """使用豆包API生成预测地址
     
     Args:
         image_path: 图片路径
         api_key: 豆包API密钥
         cot: 是否使用推理提示
+        max_retries: 最大重试次数
+        retry_delay: 重试延迟时间（秒）
         
     Returns:
         str: 生成的预测地址
     """
-    try:
-        # 读取图片并转换为base64
-        with open(image_path, 'rb') as f:
-            image_data = base64.b64encode(f.read()).decode('utf-8')
-        
-        # 构建消息
-        if not cot:
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "image",
-                            "image": image_data
-                        },
-                        {
-                            "type": "text",
-                            "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"
-                        }
-                    ]
-                }
-            ]
-        else:
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "image",
-                            "image": image_data
-                        },
-                        {
-                            "type": "text",
-                            "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n " + COT
-                        }
-                    ]
-                }
-            ]
-        
-        # 发送请求
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
-        
-        response = requests.post(
-            "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-            headers=headers,
-            json={
-                "model": "doubao-1.5-vision-pro-32k-250115",
-                "messages": messages
+    for attempt in range(max_retries):
+        try:
+            # 读取图片并转换为base64
+            with open(image_path, 'rb') as f:
+                encoded_image = base64.b64encode(f.read())
+            encoded_image_text = encoded_image.decode('utf-8')
+            base64_image = f"data:image/jpeg;base64,{encoded_image_text}"
+            
+            # 构建消息
+            if not cot:
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n "
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": base64_image
+                                }
+                            }
+                        ]
+                    }
+                ]
+            else:
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n " + COT
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": base64_image
+                                }
+                            }
+                        ]
+                    }
+                ]
+            
+            # 发送请求
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
             }
-        )
-        
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content']
-        else:
-            print(f"豆包API请求失败！状态码: {response.status_code}")
-            print(f"错误信息: {response.text}")
+            
+            response = requests.post(
+                "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+                headers=headers,
+                json={
+                    "model": "doubao-1.5-vision-pro-32k-250115",
+                    "messages": messages
+                }
+            )
+            
+            if response.status_code == 200:
+                result = response.json()
+                print(result)
+                if 'choices' in result and len(result['choices']) > 0:
+                    response_text = result['choices'][0]['message']['content']
+                    print(response_text)
+                    return response_text
+            elif response.status_code == 429:  # Rate limit
+                print(f"请求频率限制，等待{retry_delay}秒后重试...")
+                time.sleep(retry_delay)
+                continue
+            else:
+                print(f"豆包API请求失败！状态码: {response.status_code}")
+                print(f"错误信息: {response.text}")
+                if attempt < max_retries - 1:
+                    print(f"第{attempt + 1}次重试...")
+                    time.sleep(retry_delay)
+                    continue
+                return None
+                
+        except Exception as e:
+            print(f"豆包API请求出错: {str(e)}")
+            if attempt < max_retries - 1:
+                print(f"第{attempt + 1}次重试...")
+                time.sleep(retry_delay)
+                continue
             return None
             
-    except Exception as e:
-        print(f"豆包API请求出错: {str(e)}")
-        return None
+    return None
 
 def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct", 
                  test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
@@ -290,6 +317,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             batch_inputs = []
         
         # 准备批次数据
+        responses = []
         for item in batch_data:
             # 解析消息
             message = json.loads(item['message'])
@@ -328,10 +356,10 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             if inference_engine == "doubao":
                 # 使用豆包API生成预测
                 response = generate_with_doubao(image_path, doubao_api_key, cot)
-                if response:
-                    responses = [response]
-                else:
-                    responses = ["豆包API请求失败"]
+                responses.append(response)
+                batch_image_paths.append(image_path)
+                batch_items.append(item)
+
             else:
                 # 构建消息
                 if not cot:
@@ -343,7 +371,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                                     "type": "image",
                                     "image": image,
                                 },
-                                {"type": "text", "text": "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
+                                {"type": "text", "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"},
                             ],
                         }
                     ]
@@ -353,7 +381,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                             "role": "user",
                             "content": [
                                 {"type": "image", "image": image},
-                                {"type": "text", "text": cot + "请分析这张图的 1. 这张图片拍摄的国家（country）2. 这张图片拍摄的省份/州（administrative_area_level_1）3. country与administrative_area_level_1用英文表示。请用 <answer>$country,administrative_area_level_1$</answer> 的格式回答。即使你分析不出来也必须给一个明确回答包含country和administrative_area_level_1。"},
+                                {"type": "text", "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Must Guess a clear answer including country and administrative area level 1. \n " + COT},
                             ],
                         }
                     ]
@@ -389,7 +417,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             
         # 批量生成回答
         try:
-            responses = []
+            
             
             if inference_engine == "vllm":
 
@@ -429,6 +457,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 )
             
             # 处理每个回答
+
             for response, image_path, item in zip(responses, batch_image_paths, batch_items):
                 print("__________________________")
                 print(response)
@@ -585,4 +614,5 @@ if __name__ == "__main__":
 # CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_multi/checkpoints/lmm-r1-multi/ckpt/global_step260_hf
 # CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
 
-
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=383a995e-48c5-4d90-8fa8-51a765abe67e --cot
+# CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot

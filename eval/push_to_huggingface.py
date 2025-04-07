@@ -170,8 +170,18 @@ if __name__ == "__main__":
 #     --private \
 #     --commit_message "Initial model upload"
 
-#     --model_path /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf \
+#     --model_path /data/phd/tiankaibin/experiments_multi_system/checkpoints/lmm-r1-multi-system/ckpt/global_step150_hf \
 #     /data/phd/tiankaibin/lmm-r1/experiments_multi/checkpoints/lmm-r1-multi/ckpt/global_step260_hf
 
 
 #     /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model
+
+
+
+# python push_to_huggingface.py \
+#     --model_path /data/phd/tiankaibin/experiments_deepscaler_system2/checkpoints/lmm-r1-deepscaler-system2/ckpt/global_step50_hf \
+#     --repo_name Deepscaler_RL \
+#     --token xx \
+#     --organization SeekWorld \
+#     --private \
+#     --commit_message "Initial model upload"

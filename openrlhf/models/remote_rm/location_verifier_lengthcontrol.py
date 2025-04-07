@@ -37,8 +37,7 @@ def verify_format(content):
     """
     think_count = content.count("<think>")
     answer_count = content.count("<answer>")
-    comma_count = content.count(",")
-    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 and comma_count == 1
+    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 
 
 
 
@@ -180,30 +179,28 @@ def verify_location(content, sol):
         
         # 如果单词匹配，返回1.0
         if compare_region_words(pred_words, true_words):
-            return 2.0
+            return 1.0
     
     return 0.0
 
 def get_think_length_reward(content):
     """
-    根据思考部分的长度计算奖励分数
-    - 小于100字：0分
-    - 100-200字：0.5分
-    - 大于200字：1分
+    根据思考部分的长度计算奖励分数，
+    去除空格、回车、制表符等无意义字符后计算实际长度
     """
     think_match = re.search(r"<think>(.*?)</think>", content, re.DOTALL)
     if not think_match:
         return 0.0
         
-    think_content = think_match.group(1).strip()
-    length = len(think_content)
+    think_content = think_match.group(1)
+    # 移除所有空白字符（空格、制表符、换行符等）和标点符号
+    clean_content = re.sub(r'[\s\.,，。！？\!\?:：;；\(\)（）\[\]【】\{\}]+', '', think_content)
+    length = len(clean_content)
+
+    reward = length * 0.001
+    reward = min(reward, 1.0) #max 1000字
     
-    if length < 100:
-        return 0.0
-    elif 100 <= length <= 200:
-        return 0.2
-    else:
-        return 0.5
+    return reward
 
 @app.route("/get_reward", methods=["POST"])
 def get_reward():
@@ -245,6 +242,7 @@ def get_reward():
         
     acc_rewards = [f.result() for f in acc_rewards_futures]
     rewards = [f + a + t for f, a, t in zip(format_rewards, acc_rewards, think_length_rewards)]
+    # 只对于非0的acc_rewards 进行length的惩罚与激励
     # 返回包含 rewards 的响应
     return jsonify({
         "rewards": rewards,
@@ -282,7 +280,7 @@ if __name__ == "__main__":
         else:
             raise ValueError(f"Unsupported file format for dataset: {dataset_path}")
 
-    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>\Z"
+    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>$"
 
     if args.prompt_template=="chatml":
         problem_pattern = r"<\|im_start\|>user\n(.*?)<\|im_end\|>"

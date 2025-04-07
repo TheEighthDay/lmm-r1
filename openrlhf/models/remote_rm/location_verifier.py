@@ -37,8 +37,7 @@ def verify_format(content):
     """
     think_count = content.count("<think>")
     answer_count = content.count("<answer>")
-    comma_count = content.count(",")
-    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 and comma_count == 1
+    return bool(re.match(format_pattern, content, re.DOTALL)) and think_count == 1 and answer_count == 1 
 
 
 
@@ -253,7 +252,7 @@ if __name__ == "__main__":
         else:
             raise ValueError(f"Unsupported file format for dataset: {dataset_path}")
 
-    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>\Z"
+    format_pattern = r"^<think>(?:(?!</think>).)*</think>\s*<answer>(?:(?!</answer>).)*</answer>$"
 
     if args.prompt_template=="chatml":
         problem_pattern = r"<\|im_start\|>user\n(.*?)<\|im_end\|>"
