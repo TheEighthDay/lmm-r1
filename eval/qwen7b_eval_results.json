@@ -1,0 +1,2657 @@
+{
+  "accuracy": 0.30158730158730157,
+  "total_samples": 378,
+  "correct_samples": 114,
+  "wrong_samples": 264,
+  "model_name": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "inference_engine": "vllm",
+  "timestamp": "2025-03-31 12:15:57",
+  "detailed_results": [
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_city_chiang_mai_thailand_h90_r100_20250317_181114.jpg",
+      "prediction": "<answer>Thailand,Chiang Mai</answer>",
+      "ground_truth": "$thailand,chiang mai/chiang mai/chiangmai/chiangmai/chiang mai city/chiang mai city/chiang mai province/chiang mai province/เชียงใหม่$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/lyon_centro_madrid_spain_h0_r100_20250317_190639.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,community of madrid/madrid region/madrid autonomous community/madrid$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/malibu_ca_usa_h0_r100_20250317_192755.jpg",
+      "prediction": "<answer>United States, California</answer>",
+      "ground_truth": "$united states,california/state of california/ca/golden state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/high-tech_zone_chengdu_sichuan_china_place_r2000_20250317_182723.jpg",
+      "prediction": "<answer>China,Guangdong Province</answer>",
+      "ground_truth": "$china,sichuan province/sichuan/si chuan sheng/si chuan$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_de_andaluca_cruz_de_humilladero_malaga_spain_h270_r100_20250317_185159.jpg",
+      "prediction": "<answer>Spain,Andalusia</answer>",
+      "ground_truth": "$spain,andalusia/andalucía/andalusia region/andalucía region/autonomous community of andalusia/autonomous community of andalucía$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/central_business_district_harare_zimbabwe_h90_r100_20250317_193902.jpg",
+      "prediction": "<answer>Africa,Africa</answer>",
+      "ground_truth": "$zimbabwe,harare province/harare province/harare metropolitan province/harare metropolitan province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/highgate_london_united_kingdom_h270_r100_20250317_180855.jpg",
+      "prediction": "<answer>United Kingdom,England</answer>",
+      "ground_truth": "$united kingdom,england/england/the kingdom of england/kingdom of england/the country of england/country of england$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/king_george_boulevard_surrey_bc_canada_h315_r100_20250317_182123.jpg",
+      "prediction": "<answer>Canada,British Columbia</answer>",
+      "ground_truth": "$canada,british columbia/bc/b.c./province of british columbia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/fyllingsdalen_bergen_norway_h180_r100_20250317_190817.jpg",
+      "prediction": "<answer>Norway,Norway</answer>",
+      "ground_truth": "$norway,vestland/vestland county$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/testaccio_rome_italy_h45_r100_20250317_183133.jpg",
+      "prediction": "<answer>Italy,Italy</answer>",
+      "ground_truth": "$italy,lazio/lazio/latium/latium$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/via_luigi_soderini_citt_studi_milan_italy_h225_r100_20250317_203334.jpg",
+      "prediction": "<answer>Italy,Lombardy</answer>",
+      "ground_truth": "$italy,lombardy/lombardy/lombardia/lombardia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/rialto_bridge_venice_italy_h225_r100_20250317_201011.jpg",
+      "prediction": "<answer>Italy,Veneto</answer>",
+      "ground_truth": "$italy,veneto/venetia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/dotonbori_chuo_ward_osaka_japan_h0_r100_20250317_180949.jpg",
+      "prediction": "<answer>Japan,Japan</answer>",
+      "ground_truth": "$japan,osaka/osaka city/ōsaka/ōsaka-shi/city of osaka$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/siam_square_pathum_wan_district_bangkok_thailand_h315_r100_20250317_183947.jpg",
+      "prediction": "<answer>Thailand,Bangkok</answer>",
+      "ground_truth": "$thailand,bangkok/krung thep maha nakhon/krung thep/bangkok metropolis$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kowloon_walled_city_park_22_tung_tsing_road_kowloon_city_hong_kong_h0_r100_20250317_191247.jpg",
+      "prediction": "<answer>Hong Kong,Hong Kong</answer>",
+      "ground_truth": "$hong kong,kowloon/kowloon/kowloon peninsula/kowloon peninsula/kowloon district/kowloon district/the kowloon/the kowloon$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/sant_andreu_industrial_park_barcelona_spain_h225_r100_20250317_200625.jpg",
+      "prediction": "<answer>Spain,Catalonia</answer>",
+      "ground_truth": "$spain,catalonia/catalunya/cataluña/catalonha/catalonia region/catalonian region/autonomous community of catalonia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/queens_drive_lower_hutt_wellington_new_zealand_h270_r100_20250317_184047.jpg",
+      "prediction": "<answer>Australia,New South Wales</answer>",
+      "ground_truth": "$new zealand,wellington/wellington city/te whanganui-a-tara$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/kobylisy_prague_czech_republic_h90_r100_20250317_203114.jpg",
+      "prediction": "<answer>Czech Republic,Prague</answer>",
+      "ground_truth": "$czechia,prague/prague/praha/capital city of prague/capital city of prague/hlavní město praha/hlavní město praha$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/guro_digital_complex_seoul_south_korea_h225_r100_20250317_202611.jpg",
+      "prediction": "<answer>Korea,South Korea</answer>",
+      "ground_truth": "$south korea,seoul/seoul/seoul special city/seoul metropolitan city/서울특별시/seoul teukbyeolsi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/de_wallen_centrum_amsterdam_netherlands_h45_r100_20250317_203206.jpg",
+      "prediction": "<answer>Netherlands,Netherlands</answer>",
+      "ground_truth": "$netherlands,north holland/north holland/noord-holland/noord-holland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kollupitiya_colombo_sri_lanka_h315_r100_20250317_184035.jpg",
+      "prediction": "<answer>Sri Lanka,Sri Lanka</answer>",
+      "ground_truth": "$sri lanka,western province/western/wp$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/battaramulla_colombo_sri_lanka_h270_r100_20250317_184716.jpg",
+      "prediction": "<answer>Sri Lanka,Sri Lanka</answer>",
+      "ground_truth": "$sri lanka,western province/western province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/todai-ji_nara_japan_h45_r100_20250316_234531.jpg",
+      "prediction": "<answer>Japan,Kyoto</answer>",
+      "ground_truth": "$japan,nara/nara prefecture/nara-ken/nara city/nara-shi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/south_beach_miami_beach_fl_usa_h90_r100_20250317_181723.jpg",
+      "prediction": "<answer>United States, Florida</answer>",
+      "ground_truth": "$united states,florida/state of florida/fl/sunshine state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/lay_daung_kan_road_north_okkalapa_yangon_myanmar_h0_r100_20250317_192218.jpg",
+      "prediction": "<answer>Myanmar, Mandalay Division</answer>",
+      "ground_truth": "$myanmar (burma),yangon region/yangon/yangon division$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/shibuya_crossing_shibuya_tokyo_japan_h45_r100_20250317_180213.jpg",
+      "prediction": "<answer>Japan,Tokyo</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tokyo prefecture/tokyo-to/東京都$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/teine-ku_sapporo_hokkaido_japan_h135_r100_20250317_193724.jpg",
+      "prediction": "<answer>Japan,Japan</answer>",
+      "ground_truth": "$japan,hokkaido/hokkaido$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/rowe_street_eastwood_nsw_australia_h90_r100_20250317_195359.jpg",
+      "prediction": "<answer>Australia,New South Wales</answer>",
+      "ground_truth": "$australia,new south wales/new south wales/nsw/nsw$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_tbilisi_tbilisi_georgia_h135_r100_20250317_181407.jpg",
+      "prediction": "<answer>Ukraine,Ukraine</answer>",
+      "ground_truth": "$georgia,tbilisi/tbilisi/tiflis/tiflis$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/high_street_lower_hutt_wellington_new_zealand_h180_r100_20250317_185713.jpg",
+      "prediction": "<answer>New Zealand,North Island</answer>",
+      "ground_truth": "$new zealand,wellington/wellington/wellington city/wellington city/te whanganui-a-tara/te whanganui-a-tara$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/almadies_dakar_senegal_h45_r100_20250317_184934.jpg",
+      "prediction": "<answer>Mali,Mali</answer>",
+      "ground_truth": "$senegal,dakar region/dakar/dakar department/region de dakar/région de dakar$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hunter_street_newcastle_nsw_2300_australia_h0_r100_20250317_193742.jpg",
+      "prediction": "<answer>Australia,Victoria</answer>",
+      "ground_truth": "$australia,new south wales/new south wales/nsw/nsw$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/krntner_strae_1010_vienna_austria_h270_r100_20250317_193335.jpg",
+      "prediction": "<answer>Austria,Vienna</answer>",
+      "ground_truth": "$austria,vienna/vienna/wien/wien/vienna city/wien stadt$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/banff_national_park_alberta_canada_h315_r100_20250316_233109.jpg",
+      "prediction": "<answer>Canada,Alberta</answer>",
+      "ground_truth": "$canada,alberta/province of alberta/ab/alberta province$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/upper_james_st_hamilton_on_canada_h0_r100_20250317_203804.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/calle_de_luis_montoto_nervin_seville_spain_h0_r100_20250317_203350.jpg",
+      "prediction": "<answer>Spain,Catalonia</answer>",
+      "ground_truth": "$spain,andalusia/andalusia/andalucía/andalucía$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/andheri_mumbai_maharashtra_india_place_r2000_20250317_183009.jpg",
+      "prediction": "<answer>India,Maharashtra</answer>",
+      "ground_truth": "$india,maharashtra/state of maharashtra/maharashtra$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/karol_bagh_new_delhi_delhi_india_h270_r100_20250317_200701.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$india,delhi/national capital territory of delhi/nct of delhi/new delhi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/chinatown_sydney_nsw_2000_australia_h135_r100_20250317_203514.jpg",
+      "prediction": "<answer>Australia,New South Wales</answer>",
+      "ground_truth": "$australia,new south wales/new south wales/nsw/nsw$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/st_kilda_melbourne_vic_3182_australia_h225_r100_20250317_192011.jpg",
+      "prediction": "<answer>Australia,Victoria</answer>",
+      "ground_truth": "$australia,victoria/victoria/vic/vic/state of victoria/state of victoria$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/stoneridge_shopping_center_pleasanton_ca_usa_h0_r100_20250317_191210.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/state of california/golden state/ca$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/woodbine_avenue_markham_on_canada_h0_r100_20250317_182119.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,ontario/ontario/province of ontario$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/the_royal_mile_edinburgh_eh1_2pb_united_kingdom_h90_r100_20250317_182842.jpg",
+      "prediction": "<answer>United Kingdom,Scotland</answer>",
+      "ground_truth": "$united kingdom,scotland/scotland/scottish highlands/scottish highlands/scottish lowlands/scottish lowlands/scots/scots/alba/alban$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/mechelsesteenweg_mechelen_antwerp_belgium_h90_r100_20250317_181451.jpg",
+      "prediction": "<answer>Belgium,Flanders</answer>",
+      "ground_truth": "$belgium,flemish region/flanders/vlaams gewest$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/fremont_blvd_fremont_ca_usa_h0_r100_20250317_183701.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/state of california/ca/calif./golden state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_morumbi_so_paulo_brazil_h45_r100_20250317_193236.jpg",
+      "prediction": "<answer>Brazil, São Paulo</answer>",
+      "ground_truth": "$brazil,são paulo/sao paulo/são paulo state/sao paulo state/state of são paulo/state of sao paulo$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/mira_mesa_blvd_san_diego_ca_usa_h315_r100_20250317_182046.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/state of california/ca/calif./golden state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/staromstsk_nm_110_00_star_msto_czech_republic_h0_r100_20250317_195814.jpg",
+      "prediction": "<answer>Czech Republic,Prague</answer>",
+      "ground_truth": "$czechia,prague/prague/hlavní město praha/hlavní město praha/capital city of prague/capital city of prague$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/petaling_street_chinatown_kuala_lumpur_malaysia_h90_r100_20250317_183938.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,kuala lumpur/kuala lumpur/kl/kl/wilayah persekutuan kuala lumpur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/kommision_street_lanmadaw_township_yangon_myanmar_h135_r100_20250317_193954.jpg",
+      "prediction": "<answer>Thailand,Bangkok</answer>",
+      "ground_truth": "$myanmar (burma),yangon region/yangon region/yangon/yangon/rangoon region/rangoon region/rangoon/rangoon$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/ben_thanh_market_ben_thanh_district_1_ho_chi_minh_city_vietnam_h315_r100_20250317_200620.jpg",
+      "prediction": "<answer>Vietnam,Ho Chi Minh City</answer>",
+      "ground_truth": "$vietnam,ho chi minh city/ho chi minh/hcmc/saigon/sài gòn/hồ chí minh$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/mariahilfer_strae_7th_district_vienna_austria_h180_r100_20250317_194159.jpg",
+      "prediction": "<answer>Austria,Austria</answer>",
+      "ground_truth": "$austria,vienna/vienna/wien/wien$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/jinli_ancient_street_wuhou_district_chengdu_sichuan_china_h90_r100_20250317_193940.jpg",
+      "prediction": "<answer>China,Sichuan Province</answer>",
+      "ground_truth": "$china,sichuan/sichuan province/sichuan sheng/szechuan/szechwan/四川省$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/oxford_street_london_w1d_1bs_united_kingdom_h45_r100_20250317_182738.jpg",
+      "prediction": "<answer>United Kingdom,London</answer>",
+      "ground_truth": "$united kingdom,england/england$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/calle_de_gran_va_alcobendas_madrid_spain_h0_r100_20250317_203322.jpg",
+      "prediction": "<answer>Spain,Catalonia</answer>",
+      "ground_truth": "$spain,community of madrid/comunidad de madrid/madrid region/madrid autonomous community/madrid$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/xintiandi_huangpu_shanghai_china_h270_r100_20250317_193926.jpg",
+      "prediction": "<answer>China,Jiangsu Province</answer>",
+      "ground_truth": "$china,shanghai/shanghai city/shang hai shi/shanghai municipality/shanghai metropolis/shang-hai/shang hai/shànghǎi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/avenue_des_champs-lyses_8th_arrondissement_paris_france_h315_r100_20250317_194149.jpg",
+      "prediction": "<answer>France,Paris</answer>",
+      "ground_truth": "$france,île-de-france/ile-de-france/paris region/parisian region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_diagonal_l'hospitalet_de_llobregat_barcelona_spain_h180_r100_20250317_203439.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,catalonia/catalunya/catalunya/catalonia (catalunya)/catalunya (catalonia)/catalonia (spain)/catalunya (spain)/autonomous community of catalonia$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/king_street_newtown_nsw_australia_h135_r100_20250317_195405.jpg",
+      "prediction": "<answer>Australia,New South Wales</answer>",
+      "ground_truth": "$australia,new south wales/new south wales/nsw/nsw$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/martinkylntie_01720_vantaa_finland_h180_r100_20250317_194457.jpg",
+      "prediction": "<answer>Finland,Finland</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/uusimaa region/uusimaa region/nyland/nyland/region of uusimaa/region of uusimaa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/las_ramblas_barcelona_spain_h225_r100_20250317_195148.jpg",
+      "prediction": "<answer>Spain,Catalonia</answer>",
+      "ground_truth": "$spain,catalonia/catalonia/catalunya/catalunya/cataluña/cataluña/catalonia (catalunya)/catalonia (cataluña)/catalonia (catalunya/cataluña)$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/dongdaemun_jongno-gu_seoul_south_korea_h315_r100_20250317_191242.jpg",
+      "prediction": "<answer>Korea,South Korea</answer>",
+      "ground_truth": "$south korea,seoul/seoul/seoul special city/seoul metropolitan city$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/tianhe_road_tianhe_district_guangzhou_china_h270_r100_20250317_202247.jpg",
+      "prediction": "<answer>China,Guangdong Province</answer>",
+      "ground_truth": "$china,guangdong province/guangdong/guang dong sheng/guangdong sheng$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/chinatown_san_francisco_ca_usa_h90_r100_20250317_193557.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/ca/state of california/golden state/cali$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/beverly_hills_los_angeles_ca_usa_h225_r100_20250317_201101.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/california state/state of california/golden state/ca$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/terry_fox_dr_kanata_on_canada_h315_r100_20250317_203747.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/belmont-cragin_chicago_il_usa_h0_r100_20250317_193610.jpg",
+      "prediction": "<answer>United States of America, Illinois</answer>",
+      "ground_truth": "$united states,illinois/state of illinois/il/ill./land of lincoln/the prairie state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/tiantongyuan_changping_district_beijing_china_place_r2000_20250317_182712.jpg",
+      "prediction": "<answer>China,Beijing</answer>",
+      "ground_truth": "$china,beijing/beijing city/beijing municipality/peking/北京/北京市/bei jing shi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/radloostr_pasing_munich_germany_h270_r100_20250317_180839.jpg",
+      "prediction": "<answer>Germany,Bavaria</answer>",
+      "ground_truth": "$germany,bavaria/free state of bavaria/bayern/freistaat bayern$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/thamel_kathmandu_bagmati_province_nepal_h315_r100_20250317_200653.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$nepal,bagmati province/province no. 3$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/smith_st_southport_gold_coast_qld_australia_h270_r100_20250317_184016.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,queensland/qld/the sunshine state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/south_bank_parklands_brisbane_qld_australia_h180_r100_20250317_184721.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,queensland/qld/state of queensland$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jalan_bangsar_bangsar_kuala_lumpur_malaysia_h225_r100_20250317_190251.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,kuala lumpur/kuala lumpur/kl/kl/wilayah persekutuan kuala lumpur/wilayah persekutuan kuala lumpur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/peel_street_montreal_qc_canada_h180_r100_20250317_185457.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,quebec/quebec province/province of quebec/québec/québec province/province du québec$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/akihabara_taito_city_tokyo_110-0006_japan_h225_r100_20250317_193943.jpg",
+      "prediction": "<answer>Japan,Tokyo</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tokyo prefecture/tokyo-to$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/via_san_biagio_dei_librai_naples_italy_h45_r100_20250317_181547.jpg",
+      "prediction": "<answer>Italy,Naples</answer>",
+      "ground_truth": "$italy,campania/campania/region of campania/region of campania$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/downtown_markham_markham_on_canada_h90_r100_20250317_195005.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,ontario/ontario/province of ontario/province of ontario$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/aleksanterinkatu_helsinki_finland_h225_r100_20250317_183124.jpg",
+      "prediction": "<answer>Finland,Helsinki</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/nyland/nyland$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/piccadilly_circus_west_end_london_united_kingdom_h270_r100_20250317_202417.jpg",
+      "prediction": "<answer>United Kingdom,London</answer>",
+      "ground_truth": "$united kingdom,england/england/the kingdom of england/the kingdom of england/uk england/uk england/england uk/england uk$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/north_scottsdale_road_scottsdale_az_usa_h315_r100_20250317_194855.jpg",
+      "prediction": "<answer>United States, Arizona</answer>",
+      "ground_truth": "$united states,arizona/state of arizona/az/the grand canyon state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/rue_de_rivoli_courbevoie_france_h135_r100_20250317_190428.jpg",
+      "prediction": "<answer>France, Paris</answer>",
+      "ground_truth": "$france,île-de-france/ile-de-france/ile de france/paris region$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/broadway_avenue_saskatoon_sk_canada_h270_r100_20250317_183337.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,saskatchewan/saskatchewan/province of saskatchewan/province of saskatchewan/saskatchewan province/saskatchewan province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/alamo_ranch_parkway_san_antonio_tx_usa_h225_r100_20250317_193103.jpg",
+      "prediction": "<answer>United States,Texas</answer>",
+      "ground_truth": "$united states,texas/state of texas/lone star state/tx$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/vieille_ville_geneva_switzerland_h45_r100_20250317_181246.jpg",
+      "prediction": "<answer>Switzerland,Bern</answer>",
+      "ground_truth": "$switzerland,geneva/geneva/canton of geneva/canton of geneva/république et canton de genève/republic and canton of geneva/genève$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/phi_phi_islands_thailand_h180_r100_20250316_234619.jpg",
+      "prediction": "<answer>Thailand,Phi Phi Islands</answer>",
+      "ground_truth": "$thailand,krabi/krabi/krabi province/krabi province$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jiangning_university_town_jiangning_nanjing_jiangsu_china_place_r2000_20250317_190034.jpg",
+      "prediction": "<answer>China,Jiangsu Province</answer>",
+      "ground_truth": "$china,jiangsu/jiangsu province/jiangsu sheng/jiang su sheng$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/haneda_ota_city_tokyo_japan_h180_r100_20250317_193651.jpg",
+      "prediction": "<answer>Japan,Kanto</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tokyo prefecture/tokyo-to$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_wadi_al_ain_united_arab_emirates_h90_r100_20250317_202509.jpg",
+      "prediction": "<answer>United Arab Emirates,United Arab Emirates</answer>",
+      "ground_truth": "$united arab emirates,abu dhabi/abu dhabi city/abu dhabi emirate/abu dhabi metropolitan area$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/banani_residential_area_dhaka_bangladesh_h45_r100_20250317_194114.jpg",
+      "prediction": "<answer>Bangladesh,Dhaka</answer>",
+      "ground_truth": "$bangladesh,dhaka division/dhaka division/dhaka/dhaka/dhaka district/dhaka district$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/statue_of_liberty_new_york_usa_h0_r100_20250316_232952.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,new york/new york city/nyc/the big apple/the city that never sleeps$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/uluru-kata_tjuta_national_park_australia_h90_r100_20250316_232740.jpg",
+      "prediction": "<answer>Australia,Australian Capital Territory</answer>",
+      "ground_truth": "$australia,northern territory/northern territory/nt/nt/the territory/the territory$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/le_van_sy_tan_binh_district_ho_chi_minh_city_vietnam_h45_r100_20250317_192128.jpg",
+      "prediction": "<answer>Vietnam,Ho Chi Minh City</answer>",
+      "ground_truth": "$vietnam,ho chi minh city/ho chi minh city/hcmc/hồ chí minh city/saigon/saigon/sài gòn/hồ chí minh$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/calle_mateos_gago_seville_spain_h270_r100_20250317_181609.jpg",
+      "prediction": "<answer>Spain,Andalusia</answer>",
+      "ground_truth": "$spain,andalusia/andalucía/andalusia autonomous community/autonomous community of andalusia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/sorrento_valley_boulevard_san_diego_ca_usa_h180_r100_20250317_194846.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/state of california/ca/golden state/cali$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/death_valley_national_park_california_usa_h45_r100_20250316_233101.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,california/state of california/golden state/ca/calif$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_nasr_street_al_wakrah_qatar_h90_r100_20250317_193559.jpg",
+      "prediction": "<answer>United Arab Emirates,Emirates</answer>",
+      "ground_truth": "$qatar,doha/doha/ad dawhah/ad dawah/al-dawha/al-dawha/doha municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/dongmen_luohu_district_shenzhen_china_h225_r100_20250317_190102.jpg",
+      "prediction": "<answer>China,Guangdong Province</answer>",
+      "ground_truth": "$china,guangdong/guangdong province/guang dong/guang dong sheng$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/rajpath_new_delhi_delhi_india_h135_r100_20250317_194958.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$india,delhi/national capital territory of delhi/nct of delhi/new delhi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/pettah_market_colombo_01100_sri_lanka_h135_r100_20250317_190209.jpg",
+      "prediction": "<answer>Sri Lanka,Sri Lanka</answer>",
+      "ground_truth": "$sri lanka,western province/western/wp$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_mushrif_street_madinat_khalifa_abu_dhabi_united_arab_emirates_place_r2000_20250317_193526.jpg",
+      "prediction": "<answer>United Arab Emirates,Dubai</answer>",
+      "ground_truth": "$united arab emirates,abu dhabi/abu dhabi city/abū ẓabī$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/oakwood_ave_troy_ny_usa_h135_r100_20250317_192912.jpg",
+      "prediction": "<answer>United States,New Jersey</answer>",
+      "ground_truth": "$united states,new york/new york city/nyc/the big apple/gotham/the city that never sleeps/empire city/the five boroughs$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/parliament_square_westminster_london_united_kingdom_h315_r100_20250317_202425.jpg",
+      "prediction": "<answer>United Kingdom,London</answer>",
+      "ground_truth": "$united kingdom,england/england/the kingdom of england/the kingdom of england$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/grand_boulevard_joondalup_perth_wa_australia_h0_r100_20250317_182434.jpg",
+      "prediction": "<answer>Australia,Western Australia</answer>",
+      "ground_truth": "$australia,western australia/western australia/wa/wa$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/royal_mile_old_town_edinburgh_united_kingdom_h90_r100_20250317_190322.jpg",
+      "prediction": "<answer>United Kingdom,Scotland</answer>",
+      "ground_truth": "$united kingdom,scotland/scotland/scottish highlands/scottish highlands/scottish lowlands/scottish lowlands/alba/scotland/the united kingdom/scotland/uk$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/optics_valley_hongshan_district_wuhan_hubei_china_h225_r100_20250317_202645.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$china,hubei province/hubei province/hubei/hubei/hubei sheng/hubei sheng/hu bei sheng$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/de_wallen_amsterdam_netherlands_h180_r100_20250317_180832.jpg",
+      "prediction": "<answer>Netherlands,Netherlands</answer>",
+      "ground_truth": "$netherlands,north holland/north holland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/st_kilda_vic_3182_australia_h45_r100_20250317_195451.jpg",
+      "prediction": "<answer>Australia,Victoria</answer>",
+      "ground_truth": "$australia,victoria/vic/state of victoria$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/ubud_gianyar_bali_indonesia_h315_r100_20250317_191341.jpg",
+      "prediction": "<answer>Bali,Bali</answer>",
+      "ground_truth": "$indonesia,bali/bali/bali island/bali island/island of bali/island of bali/province of bali/province of bali$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/ginza_chuo_city_tokyo_japan_h135_r100_20250317_180208.jpg",
+      "prediction": "<answer>Japan,Tokyo</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tōkyō-to/東京都$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/gangnam_district_seoul_south_korea_h225_r100_20250317_202953.jpg",
+      "prediction": "<answer>South Korea,Seoul</answer>",
+      "ground_truth": "$south korea,seoul/seoul/seoul special city/seoul metropolitan city/서울특별시$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/tennoji_avenue_tennoji_ward_osaka_japan_h45_r100_20250317_181002.jpg",
+      "prediction": "<answer>Japan,Osaka</answer>",
+      "ground_truth": "$japan,osaka/osaka/osaka city/osaka city/osaka-shi/osaka-shi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/bairro_alto_lisbon_portugal_h315_r100_20250317_185610.jpg",
+      "prediction": "<answer>Portugal,Lisbon</answer>",
+      "ground_truth": "$portugal,lisbon/lisbon/lisboa/lisboa/greater lisbon/greater lisbon/grande lisboa/grande lisboa$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/burnhamthorpe_rd_w_mississauga_on_canada_h225_r100_20250317_203720.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_quebec_quebec_city_qc_canada_h315_r100_20250317_181841.jpg",
+      "prediction": "<answer>Canada,Quebec</answer>",
+      "ground_truth": "$canada,quebec/province of quebec/québec$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hurontario_street_mississauga_on_canada_h315_r100_20250317_183736.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,ontario/ontario/province of ontario/province of ontario$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/university_city_of_sharjah_sharjah_united_arab_emirates_place_r2000_20250317_184201.jpg",
+      "prediction": "<answer>Uzbekistan,Tashkent City</answer>",
+      "ground_truth": "$united arab emirates,sharjah/sharjah emirate/emirate of sharjah$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/nishinomiya-kitaguchi_nishinomiya_hyogo_japan_h315_r100_20250317_182632.jpg",
+      "prediction": "<answer>Japan,Tokyo</answer>",
+      "ground_truth": "$japan,hyogo/hyōgo/hyogo prefecture/hyōgo prefecture$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/grand_bazaar_panzdah-e-khordad_tehran_iran_h270_r100_20250317_191047.jpg",
+      "prediction": "<answer>Iran,Tehran</answer>",
+      "ground_truth": "$iran,tehran province/tehran/tehran region/tehran governorate$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/pangyo_techno_valley_seongnam_gyeonggi-do_south_korea_h135_r100_20250317_185932.jpg",
+      "prediction": "<answer>China,Beijing</answer>",
+      "ground_truth": "$south korea,gyeonggi-do/gyeonggi province/gyeonggi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/masaki_peninsula_dar_es_salaam_tanzania_place_r2000_20250317_201259.jpg",
+      "prediction": "<answer>India,Tamil Nadu</answer>",
+      "ground_truth": "$tanzania,dar es salaam/dar es salaam/dar es salam/dar es salam/dar/دار السلام$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/gornji_grad_zagreb_croatia_h90_r100_20250317_181402.jpg",
+      "prediction": "<answer>Russia,Russia</answer>",
+      "ground_truth": "$croatia,city of zagreb/zagreb/grad zagreb$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kota_kinabalu_sabah_malaysia_h225_r100_20250317_192331.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,sabah/sabah$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hulhumale_male_maldives_h45_r100_20250317_185220.jpg",
+      "prediction": "<answer>Maldives,Atolls</answer>",
+      "ground_truth": "$maldives,malé/male'/maale/male city/malé city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/west_university_drive_boise_id_usa_h135_r100_20250317_194938.jpg",
+      "prediction": "<answer>United States of America,Washington</answer>",
+      "ground_truth": "$united states,idaho/state of idaho/id$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/downtown_tunis_tunis_tunisia_h180_r100_20250317_194721.jpg",
+      "prediction": "<answer>Spain,Malaga</answer>",
+      "ground_truth": "$tunisia,tunis/tunis/greater tunis/grand tunis/tunis metropolitan area$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/gwangyang_new_town_gwangyang_south_korea_h315_r100_20250317_191913.jpg",
+      "prediction": "<answer>Korea, South,Gyeongsangbuk-do</answer>",
+      "ground_truth": "$south korea,jeollanam-do/jeollanamdo/south jeolla province/south jeolla$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/w_chinden_blvd_boise_id_usa_h45_r100_20250317_182100.jpg",
+      "prediction": "<answer>United States,America</answer>",
+      "ground_truth": "$united states,idaho/state of idaho$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kallio_helsinki_finland_h135_r100_20250317_181456.jpg",
+      "prediction": "<answer>Finland,Helsinki</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/newland/newland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hmeenkatu_19_33200_tampere_finland_h0_r100_20250317_183053.jpg",
+      "prediction": "<answer>Germany,Bavaria</answer>",
+      "ground_truth": "$finland,pirkanmaa/pirkanmaa/tampere region/tampere region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/novoli_florence_italy_h135_r100_20250317_200142.jpg",
+      "prediction": "<answer>Italy,Italy</answer>",
+      "ground_truth": "$italy,tuscany/tuscany/region of tuscany/region of tuscany/regione toscana/regione toscana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/av_de_la_prensa_solanda_quito_ecuador_h270_r100_20250317_195217.jpg",
+      "prediction": "<answer>Mexico,Mexico</answer>",
+      "ground_truth": "$ecuador,pichincha province/pichincha$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/neuschwansteinstrae_20_87645_schwangau_germany_h135_r100_20250317_184052.jpg",
+      "prediction": "<answer>Austria,Salzburg</answer>",
+      "ground_truth": "$germany,bavaria/bavarian state/free state of bavaria/freistaat bayern/bayern$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/gamla_staden_malm_sweden_h315_r100_20250317_190540.jpg",
+      "prediction": "<answer>Sweden,Stockholm</answer>",
+      "ground_truth": "$sweden,skåne county/skane county/scania/skåne län$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/carrer_de_la_safor_paterna_valencia_spain_h180_r100_20250317_183436.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,valencian community/valencian country/valencia/comunitat valenciana/comunidad valenciana/país valencià$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/towson_town_center_dulaney_valley_rd_towson_md_usa_h270_r100_20250317_191033.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,maryland/state of maryland/md$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/nha_trang_beach_nha_trang_khanh_hoa_province_vietnam_h0_r100_20250317_194847.jpg",
+      "prediction": "<answer>无法确定国家和行政区域</answer>",
+      "ground_truth": "$vietnam,khánh hòa/khanh hoa/khanh hoa province/khánh hòa province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/north_lakes_drive_north_lakes_brisbane_qld_australia_h90_r100_20250317_182342.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,queensland/queensland/state of queensland/state of queensland$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_east_village_london_on_canada_h180_r100_20250317_192822.jpg",
+      "prediction": "<answer>United States, Illinois</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/bwindi_impenetrable_forest_uganda_place_r2000_20250316_233531.jpg",
+      "prediction": "<answer>Costa Rica,Central Valley</answer>",
+      "ground_truth": "$uganda,western region/western region/western uganda/western uganda$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/cedar_lee_district_cleveland_heights_oh_usa_h90_r100_20250317_181910.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,ohio/state of ohio/oh/buckeye state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/la_candelaria_bogot_colombia_h270_r100_20250317_182026.jpg",
+      "prediction": "<answer>Colombia, Valle del Cauca</answer>",
+      "ground_truth": "$colombia,bogotá/bogota/bogotá/d.c./bogotá distrito capital/bogotá/distrito capital/bogotá d.c./bogotá district capital$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/borobudur_yogyakarta_indonesia_h225_r100_20250316_234733.jpg",
+      "prediction": "<answer>India,Andhra Pradesh</answer>",
+      "ground_truth": "$indonesia,yogyakarta special region/yogyakarta/special region of yogyakarta/daerah istimewa yogyakarta/diy/yogyakarta province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/g-11_islamabad_islamabad_capital_territory_pakistan_place_r2000_20250317_182931.jpg",
+      "prediction": "<answer>India,Tamil Nadu</answer>",
+      "ground_truth": "$pakistan,islamabad capital territory/islamabad/ict$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/uluda_national_park_bursa_turkey_h0_r100_20250317_184852.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$türkiye,bursa/bursa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jalan_danau_permai_taman_danau_kota_setapak_kuala_lumpur_malaysia_h0_r100_20250317_182834.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,kuala lumpur/kuala lumpur/kl/kl/wilayah persekutuan kuala lumpur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hallgrmskirkja_reykjavik_iceland_h90_r100_20250317_191703.jpg",
+      "prediction": "<answer>Iceland,Iceland</answer>",
+      "ground_truth": "$iceland,reykjavík/reykjavik/reykjavik city/city of reykjavik/reykjavíkurborg/reykjavikurborg$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/mohammed_v_avenue_rabat_morocco_h180_r100_20250317_200431.jpg",
+      "prediction": "<answer>China,Shanghai</answer>",
+      "ground_truth": "$morocco,rabat-salé-kénitra/rabat-salé-kénitra/rabat-sale-kenitra/rabat-sale-kenitra/rabat-salé-kénitra region/rabat-salé-kénitra region/rabat-sale-kenitra region/rabat-sale-kenitra region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/pechersk_district_kyiv_ukraine_h315_r100_20250317_190512.jpg",
+      "prediction": "<answer>Ukraine,Kiev</answer>",
+      "ground_truth": "$ukraine,kyiv/kyiv/kiev/kiev/kyiv city$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/laisvs_alja_kaunas_lithuania_h45_r100_20250317_185429.jpg",
+      "prediction": "<answer>Lithuania,Vilnius</answer>",
+      "ground_truth": "$lithuania,kaunas county/kaunas region/kauno apskritis$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kalamaja_10412_tallinn_estonia_h45_r100_20250317_184318.jpg",
+      "prediction": "<answer>Norway,Norway</answer>",
+      "ground_truth": "$estonia,harju county/harju maakond/harjumaa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/haeundae_beach_haeundae-gu_busan_south_korea_h0_r100_20250317_193956.jpg",
+      "prediction": "<answer>South Korea,Gyeonggi-do</answer>",
+      "ground_truth": "$south korea,busan/busan/pusan/pusan/busan metropolitan city/busan metropolitan city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/nowa_huta_krakow_poland_h0_r100_20250317_181534.jpg",
+      "prediction": "<answer>Germany,Berlin</answer>",
+      "ground_truth": "$poland,lesser poland voivodeship/lesser poland/małopolska/małopolskie/małopolskie voivodeship/województwo małopolskie$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/smratorg_201_kpavogur_iceland_h135_r100_20250317_194512.jpg",
+      "prediction": "<answer>Netherlands,Netherlands</answer>",
+      "ground_truth": "$iceland,kopavogur/kopavogur/kópavogur/kópavogur/kopavogsbær/kopavogsbær/kópavogsbær/kópavogsbær$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hollywood_walk_of_fame_hollywood_blvd_los_angeles_ca_usa_h0_r100_20250317_181706.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,california/state of california/ca/calif/golden state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jalan_tambun_indah_tambun_indah_simpang_ampat_penang_malaysia_h45_r100_20250317_182814.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,penang/penang/pulau pinang/pulau pinang/penang island/penang island$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/salamanca_market_hobart_australia_h90_r100_20250316_232755.jpg",
+      "prediction": "<answer>France,Ile-de-France</answer>",
+      "ground_truth": "$australia,tasmania/tas/tassie$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/anse_vata_beach_nouma_new_caledonia_h0_r100_20250317_201156.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$new caledonia,province sud/southern province/south province/province of the south$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/calle_82_centro_barranquilla_colombia_h135_r100_20250317_182253.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$colombia,atlántico department/atlantico department/atlántico/atlantico$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/h-9_islamabad_islamabad_capital_territory_pakistan_place_r2000_20250317_183018.jpg",
+      "prediction": "<answer>China,Guangdong Province</answer>",
+      "ground_truth": "$pakistan,islamabad capital territory/islamabad/ict$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/piazza_del_popolo_00187_rome_italy_h135_r100_20250317_184128.jpg",
+      "prediction": "<answer>Italy,Lazio</answer>",
+      "ground_truth": "$italy,lazio/lazio/latium/latium$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/iloilo_city_proper_iloilo_city_iloilo_philippines_h315_r100_20250317_195721.jpg",
+      "prediction": "<answer>Thailand,Bangkok</answer>",
+      "ground_truth": "$philippines,western visayas/region vi/western visayas region/region 6$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/kaiserstrae_karlsruhe_germany_h45_r100_20250317_183107.jpg",
+      "prediction": "<answer>Germany,Berlin</answer>",
+      "ground_truth": "$germany,baden-württemberg/baden-württemberg/baden-wuerttemberg/baden-wuerttemberg/baden-wurttemberg/baden-wurttemberg$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/tabuan_jaya_kuching_sarawak_malaysia_h135_r100_20250317_181235.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$malaysia,sarawak/sarawak/state of sarawak/state of sarawak/sarawak state/sarawak state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/prado_museum_madrid_spain_h45_r100_20250316_234311.jpg",
+      "prediction": "<answer>Spain,Murcia</answer>",
+      "ground_truth": "$spain,community of madrid/madrid$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/barrio_de_las_altas_montevideo_uruguay_h180_r100_20250317_195400.jpg",
+      "prediction": "<answer>Argentina,Buenos Aires</answer>",
+      "ground_truth": "$uruguay,montevideo department/montevideo/montevideo city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/via_ugo_la_malfa_palermo_italy_h270_r100_20250317_185148.jpg",
+      "prediction": "<answer>France,Provence-Alpes-Côte d'Azur</answer>",
+      "ground_truth": "$italy,sicily/sicily/sicilia/sicilia/region of sicily/region of sicily/regione siciliana/regione siciliana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/kingsway_glen_waverley_melbourne_australia_h180_r100_20250317_193402.jpg",
+      "prediction": "<answer>Australia,Australian Capital Territory</answer>",
+      "ground_truth": "$australia,victoria/victoria/state of victoria/state of victoria$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/mains_road_sunnybank_brisbane_qld_australia_h135_r100_20250317_182420.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,queensland/qld/queensland state/state of queensland$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/city_center_sofia_bulgaria_h270_r100_20250317_203955.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$bulgaria,sofia city province/sofia/capital municipality/sofia capital city/sofia city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/djibouti_city_center_djibouti_city_djibouti_place_r2000_20250317_203659.jpg",
+      "prediction": "<answer>Malaysia,Malaysia</answer>",
+      "ground_truth": "$djibouti,djibouti/djibouti city/djibouti ville$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/mrignac_transport_hub_bordeaux_france_h0_r100_20250317_200716.jpg",
+      "prediction": "<answer>France,France</answer>",
+      "ground_truth": "$france,nouvelle-aquitaine/nouvelle-aquitaine/new aquitaine/new aquitaine$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_apoquindo_las_condes_santiago_chile_h270_r100_20250317_182227.jpg",
+      "prediction": "<answer>Chile, Santiago</answer>",
+      "ground_truth": "$chile,santiago metropolitan region/santiago metropolitan region/metropolitan region of santiago/metropolitan region of santiago/región metropolitana de santiago/región metropolitana de santiago/región metropolitana$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/industriveien_lillestrm_2004_lillestrm_norway_h45_r100_20250317_194426.jpg",
+      "prediction": "<answer>Sweden,Stockholm</answer>",
+      "ground_truth": "$norway,akershus/akershus county$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/eastgate_shopping_centre_johannesburg_south_africa_h225_r100_20250317_203638.jpg",
+      "prediction": "<answer>Nigeria,Lagos</answer>",
+      "ground_truth": "$south africa,gauteng province/gauteng$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/jan_marg_16b_sector_16_chandigarh_160015_india_h45_r100_20250317_203749.jpg",
+      "prediction": "<answer>中国,北京</answer>",
+      "ground_truth": "$india,chandigarh/chandigarh/union territory of chandigarh/union territory of chandigarh/chandigarh union territory/chandigarh union territory$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/main_road_moonah_hobart_tas_australia_h225_r100_20250317_195339.jpg",
+      "prediction": "<answer>United States,Ashley Furniture Industries</answer>",
+      "ground_truth": "$australia,tasmania/tas$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_el_milagro_maracaibo_venezuela_place_r2000_20250317_183931.jpg",
+      "prediction": "<answer>Venezuela,Venezuela</answer>",
+      "ground_truth": "$venezuela,zulia/zulia state/zulia region/estado zulia/state of zulia$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hurstbourne_pkwy_louisville_ky_usa_h90_r100_20250317_191121.jpg",
+      "prediction": "<answer>United States, Florida</answer>",
+      "ground_truth": "$united states,kentucky/commonwealth of kentucky/ky$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/central_souq_sharjah_united_arab_emirates_h45_r100_20250317_195546.jpg",
+      "prediction": "<answer>Iran,Tehran</answer>",
+      "ground_truth": "$united arab emirates,sharjah/sharjah emirate/sharjah city/emirate of sharjah$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/centro_histrico_barranquilla_colombia_h180_r100_20250317_183420.jpg",
+      "prediction": "<answer>Venezuela, Miranda</answer>",
+      "ground_truth": "$colombia,atlántico department/atlántico/department of atlántico$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/lindholmen_gothenburg_sweden_h90_r100_20250317_190357.jpg",
+      "prediction": "<answer>Sweden,Stockholm</answer>",
+      "ground_truth": "$sweden,västra götaland county/vastra gotaland county/västra götaland/vastra gotaland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/av_paralela_salvador_bahia_brazil_h180_r100_20250317_195152.jpg",
+      "prediction": "<answer>Brazil,Paraíba</answer>",
+      "ground_truth": "$brazil,bahia/bahia/state of bahia/state of bahia$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/nikola_tesla_street_sarajevo_bosnia_and_herzegovina_h90_r100_20250317_203328.jpg",
+      "prediction": "<answer>Serbia,Nis</answer>",
+      "ground_truth": "$bosnia and herzegovina,federation of bosnia and herzegovina/federation of bosnia and herzegovina/federation of b&h/federation of b&h/federation of bih/federation of bih/federacija bosne i hercegovine/federacija bosne i hercegovine$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/tartu_maantee_tartu_estonia_h270_r100_20250317_200442.jpg",
+      "prediction": "<answer>Poland,Podlaskie Voivodeship</answer>",
+      "ground_truth": "$estonia,tartu maakond/tartu county$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/piazza_pretoria_palermo_italy_h315_r100_20250317_181639.jpg",
+      "prediction": "<answer>Italy,Sicily</answer>",
+      "ground_truth": "$italy,sicily/sicily/sicilia/sicilia/region of sicily/region of sicily/regione siciliana/regione siciliana$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_de_las_cortes_valencianas_benicalap_valencia_spain_h135_r100_20250317_183419.jpg",
+      "prediction": "<answer>Spain,Valencia</answer>",
+      "ground_truth": "$spain,valencian community/valencian country/valencian region/comunidad valenciana/comunitat valenciana$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hostiva_prague_czech_republic_h45_r100_20250317_194302.jpg",
+      "prediction": "<answer>中国,广东省</answer>",
+      "ground_truth": "$czechia,prague/prague/hlavní město praha/hlavní město praha/capital city of prague/capital city of prague$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/borella_colombo_sri_lanka_h45_r100_20250317_202358.jpg",
+      "prediction": "<answer>Singapore,Singapore</answer>",
+      "ground_truth": "$sri lanka,western province/western province/western province of sri lanka/western province sri lanka$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/staromstsk_nmst_praha_1_czech_republic_h270_r100_20250317_193432.jpg",
+      "prediction": "<answer>Netherlands,Overijssel</answer>",
+      "ground_truth": "$czechia,prague/prague/hlavní město praha/hlavní město praha/capital city of prague/capital city of prague/praha/praha$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/port_douglas_australia_h90_r100_20250316_232728.jpg",
+      "prediction": "<answer>Zanzibar,Zanzibar</answer>",
+      "ground_truth": "$australia,queensland/qld/the sunshine state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/la_corniche_casablanca_morocco_h315_r100_20250317_200337.jpg",
+      "prediction": "<answer>United States of America,Texas</answer>",
+      "ground_truth": "$morocco,casablanca-settat/casablanca-settat region/casablanca-settat administrative region/casablanca-settat area$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/vanalinn_10123_tallinn_estonia_h270_r100_20250317_184238.jpg",
+      "prediction": "<answer>Latvia, Latvia</answer>",
+      "ground_truth": "$estonia,harju county/harjumaa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/stonebridge_saskatoon_sk_canada_h135_r100_20250317_195043.jpg",
+      "prediction": "<answer>Canada,Alberta</answer>",
+      "ground_truth": "$canada,saskatchewan/saskatchewan/province of saskatchewan/province of saskatchewan/saskatchewan province/saskatchewan province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/software_park_siming_district_xiamen_china_h90_r100_20250317_181204.jpg",
+      "prediction": "<answer>China,Guangdong Province</answer>",
+      "ground_truth": "$china,fujian/fujian/fujian province/fujian sheng/fukien/fukien province/fukien sheng$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hauz_khas_village_deer_park_hauz_khas_new_delhi_delhi_110016_india_h225_r100_20250317_203846.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$india,national capital territory of delhi/delhi/nct of delhi/new delhi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_santsima_trinidad_villa_morra_asuncin_paraguay_place_r2000_20250317_191441.jpg",
+      "prediction": "<answer>Brazil,São Paulo</answer>",
+      "ground_truth": "$paraguay,asunción/asuncion/asunción district/asuncion district/asunción capital district/capital district of asunción/distrito capital de asunción$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/amsterdam_canals_netherlands_h135_r100_20250316_234142.jpg",
+      "prediction": "<answer>United States,Massachusetts</answer>",
+      "ground_truth": "$netherlands,north holland/north holland/noord-holland/noord-holland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/abu_ghraib_industrial_area_baghdad_iraq_place_r2000_20250317_184233.jpg",
+      "prediction": "<answer>Iraq,Iraq</answer>",
+      "ground_truth": "$iraq,al anbar governorate/al anbar/anbar governorate/anbar$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/berkeley_st_providence_ri_usa_h225_r100_20250317_183556.jpg",
+      "prediction": "<answer>United States,New Jersey</answer>",
+      "ground_truth": "$united states,rhode island/state of rhode island/ocean state/little rhody$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/city_centre_maputo_mozambique_h225_r100_20250317_193913.jpg",
+      "prediction": "<answer>Brazil,State of Rio Grande do Norte</answer>",
+      "ground_truth": "$mozambique,maputo/maputo/maputo city/maputo city/maputo province/maputo province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/ulvsundavgen_bromma_stockholm_sweden_h135_r100_20250317_200600.jpg",
+      "prediction": "<answer>Sweden,Östergötland</answer>",
+      "ground_truth": "$sweden,stockholms län/stockholm county/stockholm region/stockholm$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/santa_claus_village_rovaniemi_finland_h0_r100_20250317_200941.jpg",
+      "prediction": "<answer>Finnland,Finnland</answer>",
+      "ground_truth": "$finland,lapland/lapland/lappi/lappi/lappland/lappland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/siliguri_town_west_bengal_india_place_r2000_20250317_180812.jpg",
+      "prediction": "<answer>India,Assam</answer>",
+      "ground_truth": "$india,west bengal/west bengal/state of west bengal/state of west bengal$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/freedom_square_star_mesto_bratislava_slovakia_h315_r100_20250317_185414.jpg",
+      "prediction": "<answer>Ukraine,Donetsk Oblast</answer>",
+      "ground_truth": "$slovakia,bratislava region/bratislavský kraj/bratislava county$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kazimierz_krakw_poland_h135_r100_20250317_182954.jpg",
+      "prediction": "<answer>Poland,Poland</answer>",
+      "ground_truth": "$poland,lesser poland voivodeship/lesser poland/małopolska voivodeship/małopolska$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kabwata_cultural_village_lusaka_zambia_h270_r100_20250317_193043.jpg",
+      "prediction": "<answer>Africa,Africa</answer>",
+      "ground_truth": "$zambia,lusaka province/lusaka province/lusaka/lusaka$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/centro_histrico_santiago_chile_h270_r100_20250317_184653.jpg",
+      "prediction": "<answer>Chile,Santiago Metropolitan Region</answer>",
+      "ground_truth": "$chile,santiago metropolitan region/metropolitan region of santiago/región metropolitana/santiago metropolitan area/greater santiago$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/downtown_charlottetown_charlottetown_pe_canada_h135_r100_20250317_185709.jpg",
+      "prediction": "<answer>United States, Wisconsin</answer>",
+      "ground_truth": "$canada,prince edward island/pei/île-du-prince-édouard$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kalsa_palermo_italy_h270_r100_20250317_185602.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$italy,sicily/sicilia/region of sicily/regione siciliana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/yeongtong_suwon_gyeonggi-do_south_korea_place_r2000_20250317_191843.jpg",
+      "prediction": "<answer>Russia,Moscow Oblast</answer>",
+      "ground_truth": "$south korea,gyeonggi-do/gyeonggi province/gyeonggi-do province/gyeonggi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/makati_central_business_district_makati_metro_manila_philippines_h45_r100_20250317_195942.jpg",
+      "prediction": "<answer>Indonesia,Jakarta</answer>",
+      "ground_truth": "$philippines,metro manila/national capital region/ncr/metropolitan manila$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/hamilton_island_australia_h90_r100_20250316_232720.jpg",
+      "prediction": "<answer>Australia,Tasmania</answer>",
+      "ground_truth": "$australia,queensland/qld/queensland/qld$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/puerto_princesa_underground_river_philippines_h180_r100_20250316_234644.jpg",
+      "prediction": "<answer>Vietnam,Quang Binh</answer>",
+      "ground_truth": "$philippines,mimaropa/mimaropa/region iv-b/region 4b/southwestern tagalog region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/karl_johans_gate_oslo_norway_h270_r100_20250317_183111.jpg",
+      "prediction": "<answer>Germany,Bavaria</answer>",
+      "ground_truth": "$norway,oslo/oslo/oslo municipality/oslo municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/glen_avenue_norwalk_ct_usa_h45_r100_20250317_203503.jpg",
+      "prediction": "<answer>United States,New York</answer>",
+      "ground_truth": "$united states,connecticut/ct/the constitution state/the nutmeg state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/karl_johans_gate_0154_oslo_norway_h45_r100_20250317_183049.jpg",
+      "prediction": "<answer>Germany,Berlin</answer>",
+      "ground_truth": "$norway,oslo/oslo/oslo municipality/oslo municipality/city of oslo/city of oslo$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/boca_del_ro_madrid_spain_h0_r100_20250317_203933.jpg",
+      "prediction": "<answer>Italy,Lazio</answer>",
+      "ground_truth": "$spain,community of madrid/madrid community/madrid region/autonomous community of madrid/comunidad de madrid$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/victoria_market_victoria_seychelles_h45_r100_20250317_183747.jpg",
+      "prediction": "<answer>United States, Florida</answer>",
+      "ground_truth": "$seychelles,mont fleuri/mont fleuri/mont fleuri district/mont fleuri district$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/insadong_jongno-gu_seoul_south_korea_h270_r100_20250317_181001.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$south korea,seoul/seoul/seoul special city/seoul special city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_de_los_pirineos_plataforma_logstica_zaragoza_spain_h45_r100_20250317_192812.jpg",
+      "prediction": "<answer>Turkey,Istanbul</answer>",
+      "ground_truth": "$spain,aragón/aragon/aragon region/aragon autonomous community/autonomous community of aragon$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/andohalo_antananarivo_madagascar_place_r2000_20250317_193102.jpg",
+      "prediction": "<answer>Uganda,Kampala</answer>",
+      "ground_truth": "$madagascar,analamanga/analamanga$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kalasatama_helsinki_finland_h315_r100_20250317_200953.jpg",
+      "prediction": "<answer>United Kingdom,London</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/nyland/nyland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/karln_prague_czech_republic_h180_r100_20250317_184853.jpg",
+      "prediction": "<answer>Poland, Mazowieckie</answer>",
+      "ground_truth": "$czechia,prague/prague/prague city/prague city/capital city of prague/capital city of prague/prague region/prague region/hlavní město praha/hlavní město praha/praha/praha$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/cartagena_old_town_cartagena_colombia_h45_r100_20250317_194511.jpg",
+      "prediction": "<answer>Cuba,Cuba</answer>",
+      "ground_truth": "$colombia,bolívar department/bolívar/department of bolívar/bolivar department/bolivar/department of bolivar$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/manama_city_center_manama_bahrain_h45_r100_20250317_183716.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$bahrain,capital governorate/capital governorate/muḥāfaẓat al-ʿāṣimah$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/apgujeong-dong_gangnam-gu_seoul_south_korea_h225_r100_20250317_180612.jpg",
+      "prediction": "<answer>South Korea,South Korea</answer>",
+      "ground_truth": "$south korea,seoul/seoul special city/seoul-teukbyeolsi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jrntorgsgatan_jrntorget_rebro_sweden_h270_r100_20250317_183336.jpg",
+      "prediction": "<answer>Sweden,Stockholm</answer>",
+      "ground_truth": "$sweden,örebro county/orebro county/örebro län/orebro län$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/keukenhof_gardens_netherlands_h270_r100_20250316_234146.jpg",
+      "prediction": "<answer>Netherlands,Noord-Holland</answer>",
+      "ground_truth": "$netherlands,south holland/zuid-holland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/parque_del_retiro_madrid_spain_h180_r100_20250317_183122.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,community of madrid/community of madrid/comunidad de madrid/comunidad de madrid/madrid region/madrid region$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/azazieh_aleppo_syria_place_r2000_20250317_182559.jpg",
+      "prediction": "<answer>Egypt,Giza</answer>",
+      "ground_truth": "$syria,aleppo governorate/aleppo/halab governorate/halab$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/boulevard_taschereau_longueuil_qc_canada_h0_r100_20250317_183739.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,québec/quebec/quebec/province of quebec/province of quebec/province of québec/province of québec$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/via_della_ricerca_scientifica_tor_vergata_rome_italy_h315_r100_20250317_183443.jpg",
+      "prediction": "<answer>中国,北京市</answer>",
+      "ground_truth": "$italy,lazio/lazio/region of lazio/region of lazio/latium/latium$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kemang_south_jakarta_jakarta_indonesia_h180_r100_20250317_182720.jpg",
+      "prediction": "<answer>Indonesia,Jakarta</answer>",
+      "ground_truth": "$indonesia,jakarta/jakarta capital region/jakarta special capital region/dki jakarta/daerah khusus ibukota jakarta/special capital region of jakarta$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/salmiya_hawalli_governorate_kuwait_h225_r100_20250317_203634.jpg",
+      "prediction": "<answer>Kuwait,Kuwait</answer>",
+      "ground_truth": "$kuwait,hawalli governorate/hawalli/hawally$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/clouange_metz_france_place_r2000_20250317_200133.jpg",
+      "prediction": "<answer>France,France</answer>",
+      "ground_truth": "$france,grand est/grand est/alsace-champagne-ardenne-lorraine/alsace-champagne-ardenne-lorraine$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/marine_parade_cottesloe_perth_australia_h90_r100_20250317_202324.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$australia,western australia/western australia/wa/wa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/don_mckinnon_drive_albany_auckland_new_zealand_h180_r100_20250317_193419.jpg",
+      "prediction": "<answer>Australia,Victoria</answer>",
+      "ground_truth": "$new zealand,auckland/auckland/tāmaki makaurau/tamaki makaurau$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_town_alexandria_alexandria_va_usa_h45_r100_20250317_192742.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,virginia/commonwealth of virginia/old dominion/va$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/oseaua_pipera_pipera_bucharest_romania_h135_r100_20250317_191021.jpg",
+      "prediction": "<answer>Russia,Russia</answer>",
+      "ground_truth": "$romania,ilfov county/ilfov county/județul ilfov/județul ilfov$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/corniche_road_jeddah_saudi_arabia_h90_r100_20250317_182251.jpg",
+      "prediction": "<answer>UAE, Dubai</answer>",
+      "ground_truth": "$saudi arabia,makkah province/makkah region/mecca province/mecca region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/vanalinn_tallinn_estonia_h270_r100_20250317_191642.jpg",
+      "prediction": "<answer>Estonia,Tallinn</answer>",
+      "ground_truth": "$estonia,harju county/harjumaa/harju maakond$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/bayan_lepas_industrial_park_penang_malaysia_h270_r100_20250317_200026.jpg",
+      "prediction": "<answer>Singapore,Singapore</answer>",
+      "ground_truth": "$malaysia,penang/penang/penang island/penang island/pulau pinang/pulau pinang/state of penang/state of penang$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/connaught_place_new_delhi_delhi_110001_india_h0_r100_20250317_203032.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$india,delhi/nct of delhi/national capital territory of delhi/new delhi/new delhi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/baarija_sarajevo_bosnia_and_herzegovina_h270_r100_20250317_181359.jpg",
+      "prediction": "<answer>Italy,Italy</answer>",
+      "ground_truth": "$bosnia and herzegovina,federation of bosnia and herzegovina/federation of bosnia and herzegovina/federation of bih/federation of bih/federacija bosne i hercegovine/federacija bosne i hercegovine/federation/federation$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/king's_road_08002_barcelona_spain_h270_r100_20250317_193344.jpg",
+      "prediction": "<answer>France,France</answer>",
+      "ground_truth": "$spain,catalonia/catalunya/catalunya/catalonia (catalunya)/catalonia (cataluña)/catalonia (catalan: catalunya)/catalonia (spanish: cataluña)/autonomous community of catalonia/comunitat autònoma de catalunya/comunidad autónoma de cataluña$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jalan_mh_thamrin_menteng_central_jakarta_jakarta_indonesia_h90_r100_20250317_193912.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$indonesia,jakarta/jakarta/jakarta special capital region/special capital region of jakarta/dki jakarta/dki/daerah khusus ibukota jakarta$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_francisco_de_miranda_chacao_caracas_venezuela_h135_r100_20250317_185550.jpg",
+      "prediction": "<answer>Peru,Lima</answer>",
+      "ground_truth": "$venezuela,miranda/miranda state/estado miranda/state of miranda$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hervanta_industrial_park_tampere_finland_h315_r100_20250317_181702.jpg",
+      "prediction": "<answer>Finland,Helsinki</answer>",
+      "ground_truth": "$finland,pirkanmaa/pirkanmaa/tampere region/tampere region/pirkanmaa region/pirkanmaa region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_far_street_al_yasmeen_amman_jordan_place_r2000_20250317_193503.jpg",
+      "prediction": "<answer>Jordan,Amman Governorate</answer>",
+      "ground_truth": "$jordan,amman governorate/amman/muhafazat al-asima/al-asimah/capital governorate$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/carmel_market_tel_aviv_israel_h90_r100_20250317_183209.jpg",
+      "prediction": "<answer>Germany,Bavaria</answer>",
+      "ground_truth": "$israel,tel aviv district/tel aviv district/tel aviv metropolitan area/tel aviv metropolitan area/gush dan/gush dan$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/white_oak_ave_silver_spring_md_usa_h135_r100_20250317_192842.jpg",
+      "prediction": "<answer>United States,New Jersey</answer>",
+      "ground_truth": "$united states,maryland/md/state of maryland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/cyber_city_dlf_phase_2_gurugram_haryana_india_h45_r100_20250317_181325.jpg",
+      "prediction": "<answer>China,Beijing</answer>",
+      "ground_truth": "$india,haryana/haryana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hoang_sa_road_son_tra_da_nang_vietnam_h90_r100_20250317_190237.jpg",
+      "prediction": "<answer>Thailand,Chonburi</answer>",
+      "ground_truth": "$vietnam,da nang/da nang/đà nẵng/danang$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hollywood_walk_of_fame_hollywood_los_angeles_ca_usa_h90_r100_20250317_192724.jpg",
+      "prediction": "<answer>United States of America,California</answer>",
+      "ground_truth": "$united states,california/ca/state of california/golden state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/corso_trieste_moncalieri_turin_italy_h135_r100_20250317_181836.jpg",
+      "prediction": "<answer>Italy,Italy</answer>",
+      "ground_truth": "$italy,piedmont/piedmont/piedmont region/piemonte/piemonte$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/bayfield_street_barrie_on_canada_h45_r100_20250317_193151.jpg",
+      "prediction": "<answer>United States,Michigan</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/arima_onsen_kobe_japan_h180_r100_20250316_234513.jpg",
+      "prediction": "<answer>Japan,Japan</answer>",
+      "ground_truth": "$japan,hyogo/hyōgo/hyogo prefecture/hyōgo prefecture$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/stone_town_zanzibar_tanzania_h315_r100_20250316_233519.jpg",
+      "prediction": "<answer>Tanzania,Tanzania</answer>",
+      "ground_truth": "$tanzania,mjini magharibi region/zanzibar urban west region/mjini magharibi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenija_dubrovnik_zagreb_croatia_h315_r100_20250317_181608.jpg",
+      "prediction": "<answer>United States of America, Pennsylvania</answer>",
+      "ground_truth": "$croatia,city of zagreb/zagreb/grad zagreb$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/spring_garden_road_halifax_ns_canada_h90_r100_20250317_182208.jpg",
+      "prediction": "<answer>CANADA,NEW BRUNSWICK</answer>",
+      "ground_truth": "$canada,nova scotia/nova scotia$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/market_st_university_city_philadelphia_pa_usa_h135_r100_20250317_200801.jpg",
+      "prediction": "<answer>United States,Colorado</answer>",
+      "ground_truth": "$united states,pennsylvania/commonwealth of pennsylvania/pa/penn$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hulhumale_mal_maldives_h90_r100_20250317_181137.jpg",
+      "prediction": "<answer>Thailand,Prachuap Khiri Khan</answer>",
+      "ground_truth": "$maldives,malé/male/malé city/malé region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/lagoa_da_conceio_florianpolis_brazil_h315_r100_20250317_190909.jpg",
+      "prediction": "<answer>Brazil,São Paulo</answer>",
+      "ground_truth": "$brazil,santa catarina/santa catarina/state of santa catarina/state of santa catarina$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_de_las_amricas_guayaquil_ecuador_h270_r100_20250317_183920.jpg",
+      "prediction": "<answer>United States, Florida</answer>",
+      "ground_truth": "$ecuador,guayas/guayas province/guayas region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/centar_skopje_north_macedonia_h315_r100_20250317_203959.jpg",
+      "prediction": "<answer>Bulgaria,Bulgaria</answer>",
+      "ground_truth": "$north macedonia,greater skopje/skopje statistical region/city of skopje/skopje region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/sector_17_chandigarh_india_h90_r100_20250317_191352.jpg",
+      "prediction": "<answer>India,Andhra Pradesh</answer>",
+      "ground_truth": "$india,chandigarh/chandigarh city/union territory of chandigarh/chandigarh ut$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/chestnut_ave_boston_ma_usa_h270_r100_20250317_192903.jpg",
+      "prediction": "<answer>United States,New York</answer>",
+      "ground_truth": "$united states,massachusetts/commonwealth of massachusetts/ma/mass.$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/gangnam_seoul_south_korea_h180_r100_20250317_202614.jpg",
+      "prediction": "<answer>China,Guangdong</answer>",
+      "ground_truth": "$south korea,seoul/seoul special city/seoul metropolitan city/서울특별시$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/lalbagh_fort_area_dhaka_bangladesh_h90_r100_20250317_194132.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$bangladesh,dhaka division/dhaka/dhaka district$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/king_abdullah_financial_district_riyadh_saudi_arabia_h270_r100_20250317_200258.jpg",
+      "prediction": "<answer>Israel,Israel</answer>",
+      "ground_truth": "$saudi arabia,riyadh province/riyadh region/al riyadh/riyadh$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/ploshcha_svabody_minsk_belarus_h135_r100_20250317_194324.jpg",
+      "prediction": "<answer>Russia,Moscow Oblast</answer>",
+      "ground_truth": "$belarus,minsk region/minskaja voblasć/minsk oblast/minskaya oblast/минская область$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/zamzama_karachi_pakistan_place_r2000_20250317_194953.jpg",
+      "prediction": "<answer>Pakistan,Khyber Pakhtunkhwa</answer>",
+      "ground_truth": "$pakistan,sindh/sind/sind/sind province/sindh province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/sharjah_arts_area_al_shuwaihean_sharjah_united_arab_emirates_h45_r100_20250317_184846.jpg",
+      "prediction": "<answer>Saudi Arabia,Al Baha Region</answer>",
+      "ground_truth": "$united arab emirates,sharjah/sharjah emirate/emirate of sharjah$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/martinska_cesta_btc_city_ljubljana_slovenia_h0_r100_20250317_190659.jpg",
+      "prediction": "<answer>Austria,Salzburg</answer>",
+      "ground_truth": "$slovenia,ljubljana/ljubljana city/ljubljana municipality/city of ljubljana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/petaling_street_city_centre_kuala_lumpur_malaysia_h270_r100_20250317_191337.jpg",
+      "prediction": "<answer>Malaysia,Perak</answer>",
+      "ground_truth": "$malaysia,kuala lumpur/kuala lumpur/kl/kl/wilayah persekutuan kuala lumpur/wilayah persekutuan/wp kuala lumpur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/bernard_avenue_kelowna_bc_canada_h0_r100_20250317_191407.jpg",
+      "prediction": "<answer>Canada,Alberta</answer>",
+      "ground_truth": "$canada,british columbia/b.c./bc$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/music_village_blvd_nashville_tn_usa_h0_r100_20250317_200841.jpg",
+      "prediction": "<answer>United States,Alabama</answer>",
+      "ground_truth": "$united states,tennessee/tn/state of tennessee/volunteer state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/manukau_road_epsom_auckland_new_zealand_h135_r100_20250317_195324.jpg",
+      "prediction": "<answer>New Zealand,New Zealand</answer>",
+      "ground_truth": "$new zealand,auckland/auckland/tāmaki makaurau/tamaki makaurau$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/sanlitun_chaoyang_beijing_china_h0_r100_20250317_180242.jpg",
+      "prediction": "<answer>United Kingdom,England</answer>",
+      "ground_truth": "$china,beijing/beijing/beijing city/beijing municipality/peking/北京/北京市$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/senri_chuo_toyonaka_osaka_japan_h315_r100_20250317_193626.jpg",
+      "prediction": "<answer>Japan, Tokyo</answer>",
+      "ground_truth": "$japan,osaka/osaka/osaka city/osaka city/osaka-shi/osaka-shi/ōsaka/ōsaka/ōsaka-shi/ōsaka-shi$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/magellan's_cross_cebu_city_cebu_philippines_h135_r100_20250317_194912.jpg",
+      "prediction": "<answer>Philippines,Metro Manila</answer>",
+      "ground_truth": "$philippines,central visayas/region vii/central visayas region/region 7$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/victoria_island_lagos_nigeria_h135_r100_20250317_184927.jpg",
+      "prediction": "<answer>Nigeria,Lagos State</answer>",
+      "ground_truth": "$nigeria,lagos/lagos state/metropolitan lagos$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/via_pisana_scandicci_florence_italy_h315_r100_20250317_190950.jpg",
+      "prediction": "<answer>中国,浙江省</answer>",
+      "ground_truth": "$italy,tuscany/tuscany/toscana/toscana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/dugbe_market_ibadan_nigeria_h45_r100_20250317_193027.jpg",
+      "prediction": "<answer>Nigeria,Lagos State</answer>",
+      "ground_truth": "$nigeria,oyo state/oyo/oyo region/oyo province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/centro_crdoba_argentina_h180_r100_20250317_191922.jpg",
+      "prediction": "<answer>Brazil,Minas Gerais</answer>",
+      "ground_truth": "$argentina,córdoba province/cordoba province/province of córdoba/province of cordoba/córdoba/cordoba$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/city_centre_tunis_tunisia_h225_r100_20250317_195619.jpg",
+      "prediction": "<answer>Morocco,Tanger-Tetouan-Al Hoceima</answer>",
+      "ground_truth": "$tunisia,tunis governorate/tunis/governorate of tunis$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/grnland_oslo_norway_h90_r100_20250317_190528.jpg",
+      "prediction": "<answer>Sweden,Stockholm</answer>",
+      "ground_truth": "$norway,oslo/oslo/city of oslo/city of oslo/oslo municipality/oslo municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/otaniementie_02150_espoo_finland_h180_r100_20250317_194438.jpg",
+      "prediction": "<answer>Finland,Unknown</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/nyland/nyland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/overton_rd_birmingham_al_usa_h270_r100_20250317_183542.jpg",
+      "prediction": "<answer>United States,Georgia</answer>",
+      "ground_truth": "$united states,alabama/state of alabama$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/itabashi_seoul_south_korea_h90_r100_20250317_195635.jpg",
+      "prediction": "<answer>Japan,Kanto</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tokyo prefecture$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/chatuchak_weekend_market_chatuchak_bangkok_thailand_h135_r100_20250317_192316.jpg",
+      "prediction": "<answer>Thailand,Unknown</answer>",
+      "ground_truth": "$thailand,bangkok/bangkok/krung thep maha nakhon/krung thep maha nakhon/krung thep/krung thep$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/university_of_saskatchewan_saskatoon_sk_canada_h225_r100_20250317_201131.jpg",
+      "prediction": "<answer>United States of America, Illinois</answer>",
+      "ground_truth": "$canada,saskatchewan/saskatchewan/province of saskatchewan/province of saskatchewan/saskatchewan province/saskatchewan province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/s_grand_blvd_spokane_wa_usa_h270_r100_20250317_203708.jpg",
+      "prediction": "<answer>United States,California</answer>",
+      "ground_truth": "$united states,washington/washington d.c./washington/d.c./washington dc/washington district of columbia/d.c./dc$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/boulevard_michelet_9th_arrondissement_marseille_france_h90_r100_20250317_185140.jpg",
+      "prediction": "<answer>France,Île-de-France</answer>",
+      "ground_truth": "$france,provence-alpes-côte d'azur/provence-alpes-cote d'azur/paca/provence region/southern region of france$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_masalah_doha_qatar_h135_r100_20250317_195446.jpg",
+      "prediction": "<answer>Saudi Arabia,Kingdom of Saudi Arabia</answer>",
+      "ground_truth": "$qatar,doha/doha/ad dawhah/ad dawah/al-dawhah/al-dawhah/ad-dawhah/ad-dawhah/doha municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/urawa-misono_midori_ward_saitama_japan_h90_r100_20250317_182625.jpg",
+      "prediction": "<answer>Japan,Tokyo</answer>",
+      "ground_truth": "$japan,saitama/saitama prefecture/saitama-ken$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/rittenhouse_square_philadelphia_pa_usa_h270_r100_20250317_200135.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,pennsylvania/commonwealth of pennsylvania/pa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/matinkyl_espoo_helsinki_finland_h180_r100_20250317_185035.jpg",
+      "prediction": "<answer>Germany,Berlin</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/nyland/nyland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/chocolate_hills_bohol_philippines_h315_r100_20250316_234648.jpg",
+      "prediction": "<answer>Philippines,Quezon</answer>",
+      "ground_truth": "$philippines,central visayas/region vii/central visayas region$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jetty_road_glenelg_adelaide_sa_australia_h45_r100_20250317_182413.jpg",
+      "prediction": "<answer>Switzerland,Zurich</answer>",
+      "ground_truth": "$australia,south australia/south australia/sa/sa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/calvert_st_baltimore_md_usa_h315_r100_20250317_183609.jpg",
+      "prediction": "<answer>United States, California</answer>",
+      "ground_truth": "$united states,maryland/md/state of maryland/old line state/free state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/nha_trang_city_center_khanh_hoa_vietnam_h45_r100_20250317_194042.jpg",
+      "prediction": "<answer>Vietnam,Vietnam</answer>",
+      "ground_truth": "$vietnam,khánh hòa/khanh hoa/khanh hoa province/tỉnh khánh hòa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/gateway_boulevard_nw_edmonton_ab_canada_h90_r100_20250317_191327.jpg",
+      "prediction": "<answer>United States,America</answer>",
+      "ground_truth": "$canada,alberta/alberta/province of alberta/province of alberta$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/jl_mayjen_sungkono_dukuh_pakis_surabaya_east_java_indonesia_h90_r100_20250317_184617.jpg",
+      "prediction": "<answer>Indonesia,West Java</answer>",
+      "ground_truth": "$indonesia,east java/jawa timur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/kuwait_city_kuwait_h270_r100_20250317_202914.jpg",
+      "prediction": "<answer>Saudi Arabia,KSA</answer>",
+      "ground_truth": "$kuwait,kuwait city/kuwait city/al asimah/al asimah/capital governorate/capital governorate/al asimah governate$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/al_adailiya_kuwait_city_kuwait_place_r2000_20250317_195511.jpg",
+      "prediction": "<answer>Egypt,Alexandria</answer>",
+      "ground_truth": "$kuwait,kuwait city/kuwait city/al asimah/al asimah/capital governorate/capital governorate/al asimah governate$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/great_north_road_henderson_auckland_new_zealand_h45_r100_20250317_193342.jpg",
+      "prediction": "<answer>New Zealand,New Zealand</answer>",
+      "ground_truth": "$new zealand,auckland/auckland city/tāmaki makaurau$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/el_centro_histrico_barranquilla_colombia_h270_r100_20250317_182006.jpg",
+      "prediction": "<answer>Indonesia,West Java</answer>",
+      "ground_truth": "$colombia,atlántico department/atlántico/department of atlántico$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/incheon-daero_namdong-gu_incheon_south_korea_h45_r100_20250317_181025.jpg",
+      "prediction": "<answer>South Korea,South Korea</answer>",
+      "ground_truth": "$south korea,incheon/incheon metropolitan city/inchon/incheon city/inch'ŏn$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/uttara_residential_area_dhaka_bangladesh_h315_r100_20250317_181342.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$bangladesh,dhaka division/dhaka/dacca division/dacca$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/west_end_london_uk_h270_r100_20250317_200729.jpg",
+      "prediction": "<answer>United Kingdom,London</answer>",
+      "ground_truth": "$united kingdom,england/england/the kingdom of england/the kingdom of england$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_javier_prado_este_san_isidro_lima_peru_h180_r100_20250317_193218.jpg",
+      "prediction": "<answer>Mexico,Mexico</answer>",
+      "ground_truth": "$peru,province of lima/lima province/lima/provincia de lima$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/osnabrcker_strae_pankow_berlin_germany_h315_r100_20250317_194144.jpg",
+      "prediction": "<answer>Germany,Berlin</answer>",
+      "ground_truth": "$germany,berlin/berlin/berlin city/berlin metropolis/city of berlin$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/vientiane_city_center_vientiane_laos_h90_r100_20250317_193312.jpg",
+      "prediction": "<answer>Thailand,Chiang Mai</answer>",
+      "ground_truth": "$laos,vientiane prefecture/vientiane capital/vientiane/vientiane municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/fujigaoka_meito_ward_nagoya_aichi_japan_h270_r100_20250317_191905.jpg",
+      "prediction": "<answer>Japan,Japan</answer>",
+      "ground_truth": "$japan,aichi/aichi prefecture/aichi-ken$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/like_tee_tallinn_estonia_h90_r100_20250317_194328.jpg",
+      "prediction": "<answer>Finland,Finland</answer>",
+      "ground_truth": "$estonia,harju county/harju maakond/harjumaa$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/burwood_road_burwood_sydney_nsw_australia_h0_r100_20250317_182438.jpg",
+      "prediction": "<answer>Australia,Victoria</answer>",
+      "ground_truth": "$australia,new south wales/new south wales/nsw/nsw$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/taksim_square_istanbul_turkey_h180_r100_20250317_195534.jpg",
+      "prediction": "<answer>Turkey,Istanbul</answer>",
+      "ground_truth": "$türkiye,istanbul/i̇stanbul/constantinople/byzantium/stamboul$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/ulitsa_arbat_moscow_russia_h90_r100_20250317_181323.jpg",
+      "prediction": "<answer>Russia,Moscow</answer>",
+      "ground_truth": "$russia,moscow/moskva/москва/moscow region/moskva oblast/moscow oblast$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/old_port_marseille_france_h270_r100_20250317_201053.jpg",
+      "prediction": "<answer>France,Provence-Alpes-Côte d'Azur</answer>",
+      "ground_truth": "$france,provence-alpes-côte d'azur/provence-alpes-cote d'azur/provence-alpes-côte d'azur region/paca/provence region/french riviera$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/banani_dhaka_1213_bangladesh_h90_r100_20250317_190205.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$bangladesh,dhaka division/dhaka/ঢাকা বিভাগ/ঢাকা$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/avenida_paulista_bela_vista_so_paulo_brazil_h135_r100_20250317_185722.jpg",
+      "prediction": "<answer>Brazil, Sao Paulo</answer>",
+      "ground_truth": "$brazil,são paulo/sao paulo/state of são paulo/estado de são paulo$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/petronas_twin_towers_kuala_lumpur_malaysia_h0_r100_20250317_185157.jpg",
+      "prediction": "<answer>Singapore,Singapore</answer>",
+      "ground_truth": "$malaysia,kuala lumpur/kuala lumpur/kuala lumpur federal territory/kuala lumpur federal territory/wilayah persekutuan kuala lumpur/wilayah persekutuan kuala lumpur$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/petrzalka_bratislava_slovakia_h180_r100_20250317_184914.jpg",
+      "prediction": "<answer>Poland,Podkarpackie Voivodeship</answer>",
+      "ground_truth": "$slovakia,bratislava region/bratislava region/bratislavský kraj/bratislava county$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/antariksh_business_park_andheri_east_mumbai_maharashtra_india_h45_r100_20250317_194012.jpg",
+      "prediction": "<answer>India,Maharashtra</answer>",
+      "ground_truth": "$india,maharashtra/maharashtra state/state of maharashtra$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/gulshan_dhaka_dhaka_division_bangladesh_h180_r100_20250317_200657.jpg",
+      "prediction": "<answer>Vietnam,Hanoi</answer>",
+      "ground_truth": "$bangladesh,dhaka division/dhaka division/dhaka/dhaka$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/aleppo_citadel_aleppo_syria_h0_r100_20250317_184905.jpg",
+      "prediction": "<answer>Syria,Syria</answer>",
+      "ground_truth": "$syria,aleppo governorate/aleppo/aleppo province$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/karrada_baghdad_iraq_place_r2000_20250317_182545.jpg",
+      "prediction": "<answer>Iraq,Baghdad</answer>",
+      "ground_truth": "$iraq,baghdad governorate/baghdad province/baghdad/baghdad governorate of iraq/governorate of baghdad$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/logan_square_chicago_il_usa_h270_r100_20250317_200122.jpg",
+      "prediction": "<answer>United States of America,Illinois</answer>",
+      "ground_truth": "$united states,illinois/state of illinois/il/ill.$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/silicon_oasis_dubai_united_arab_emirates_h90_r100_20250317_182446.jpg",
+      "prediction": "<answer>Saudi Arabia,Al-Jawf</answer>",
+      "ground_truth": "$united arab emirates,dubai/dubai/dubai city/dubai city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/karlova_prague_czech_republic_h45_r100_20250317_192544.jpg",
+      "prediction": "<answer>Czech Republic,Czech Republic</answer>",
+      "ground_truth": "$czechia,prague/prague/prague capital city/hlavní město praha/capital city of prague/city of prague$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/grand_place_brussels_city_center_brussels_belgium_h45_r100_20250317_203223.jpg",
+      "prediction": "<answer>Belgium,Brussels</answer>",
+      "ground_truth": "$belgium,brussels/brussels/bruxelles/bruxelles/brussels-capital region/brussels-capital region/région de bruxelles-capitale/région de bruxelles-capitale/brussels region/brussels region$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/oyama_itabashi_tokyo_japan_h180_r100_20250317_185917.jpg",
+      "prediction": "<answer>Japan, Tokyo</answer>",
+      "ground_truth": "$japan,tokyo/tokyo/tokyo metropolis/tokyo prefecture/tōkyō-to/東京都$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/malasaa_madrid_spain_h45_r100_20250317_184418.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,community of madrid/madrid/autonomous community of madrid/comunidad de madrid$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/uspenski_cathedral_helsinki_finland_h0_r100_20250317_203355.jpg",
+      "prediction": "<answer>Finland,Helsinki</answer>",
+      "ground_truth": "$finland,uusimaa/uusimaa/nyland/nyland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/coal_harbour_vancouver_bc_canada_h90_r100_20250317_191830.jpg",
+      "prediction": "<answer>Canada,British Columbia</answer>",
+      "ground_truth": "$canada,british columbia/bc/province of british columbia/b.c.$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/corniche_road_al_khubeirah_abu_dhabi_united_arab_emirates_h225_r100_20250317_184819.jpg",
+      "prediction": "<answer>United Arab Emirates,Abu Dhabi</answer>",
+      "ground_truth": "$united arab emirates,abu dhabi/abu zabi/abū ẓabī$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/chinatown_yaowarat_road_bangkok_thailand_h135_r100_20250317_185101.jpg",
+      "prediction": "<answer>Thailand,Chiang Mai</answer>",
+      "ground_truth": "$thailand,bangkok/krung thep maha nakhon/krung thep/city of angels/the big mango/bkk$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/monteverde_cloud_forest_costa_rica_h270_r100_20250316_233304.jpg",
+      "prediction": "<answer>Costa Rica,Central America</answer>",
+      "ground_truth": "$costa rica,puntarenas province/puntarenas/provincia de puntarenas$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/stare_miasto_krakw_poland_h135_r100_20250317_184212.jpg",
+      "prediction": "<answer>Poland,Krakow</answer>",
+      "ground_truth": "$poland,lesser poland voivodeship/lesser poland/małopolskie/małopolska/małopolska voivodeship/małopolskie voivodeship$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/broadway_newmarket_auckland_new_zealand_h180_r100_20250317_182431.jpg",
+      "prediction": "<answer>New Zealand,New Zealand</answer>",
+      "ground_truth": "$new zealand,auckland/akl/auckland city/city of sails/tāmaki makaurau$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/defence_housing_authority_karachi_sindh_pakistan_h135_r100_20250317_192242.jpg",
+      "prediction": "<answer>India,Delhi</answer>",
+      "ground_truth": "$pakistan,sindh/sind/sind province/province of sindh$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/northbridge_wa_6003_australia_h45_r100_20250317_195432.jpg",
+      "prediction": "<answer>Australia,Australia</answer>",
+      "ground_truth": "$australia,western australia/wa/state of western australia$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/kashgar_old_town_xinjiang_china_h270_r100_20250316_234457.jpg",
+      "prediction": "<answer>Middle East,Azerbaijan</answer>",
+      "ground_truth": "$china,xinjiang uyghur autonomous region/xinjiang/xinjiang uygur autonomous region/xinjiang autonomous region/xinjiang province/xin jiang wei wu er zi zhi qu$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/central_market_adami-lundrovo_nabreje_1000_ljubljana_slovenia_h315_r100_20250317_184258.jpg",
+      "prediction": "<answer>Slovenia,Slovenia</answer>",
+      "ground_truth": "$slovenia,ljubljana/ljubljana/municipality of ljubljana/city municipality of ljubljana/city of ljubljana$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_famous_buildings/thousand_islands_ontario_canada_place_r2000_20250316_233136.jpg",
+      "prediction": "<answer>Canada,Ontario</answer>",
+      "ground_truth": "$canada,ontario/ontario/province of ontario/province of ontario$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/souq_waqif_doha_qatar_h0_r100_20250317_185925.jpg",
+      "prediction": "<answer>Qatar, Qatar</answer>",
+      "ground_truth": "$qatar,doha/ad dawhah/dawhah/doha municipality$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/springfield_transportation_hub_springfield_ma_usa_h315_r100_20250317_194808.jpg",
+      "prediction": "<answer>United States of America,New York</answer>",
+      "ground_truth": "$united states,massachusetts/commonwealth of massachusetts/ma/mass.$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/downtown_edmonton_edmonton_alberta_canada_h270_r100_20250317_204251.jpg",
+      "prediction": "<answer>Canada，Ontario</answer>",
+      "ground_truth": "$canada,alberta/province of alberta/ab$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/noosa_main_beach_noosa_heads_qld_4567_australia_h0_r100_20250317_191031.jpg",
+      "prediction": "<answer>Hawaii,Hawaii</answer>",
+      "ground_truth": "$australia,queensland/qld/state of queensland$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/saddar_karachi_karachi_city_sindh_pakistan_h135_r100_20250317_203053.jpg",
+      "prediction": "<answer>Pakistan,Punjab</answer>",
+      "ground_truth": "$pakistan,sindh province/sindh/sind$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/diocletian's_palace_split_croatia_h135_r100_20250317_181419.jpg",
+      "prediction": "<answer>Croatia,Dalmatia</answer>",
+      "ground_truth": "$croatia,split-dalmatia county/split-dalmatia/splitsko-dalmatinska županija/split-dalmatia region/splitsko-dalmatinska$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/mirabellplatz_salzburg_austria_h45_r100_20250317_203852.jpg",
+      "prediction": "<answer>Austria,Vienna</answer>",
+      "ground_truth": "$austria,salzburg/salzburg state/state of salzburg/land salzburg$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/iconsiam_khlong_san_bangkok_thailand_h135_r100_20250317_203024.jpg",
+      "prediction": "<answer>Singapore,Singapore</answer>",
+      "ground_truth": "$thailand,bangkok/krung thep maha nakhon/krung thep/bangkok metropolis$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/the_bund_huangpu_shanghai_china_h180_r100_20250317_180934.jpg",
+      "prediction": "<answer>China,Shanghai</answer>",
+      "ground_truth": "$china,shanghai/shanghai/shanghai municipality/shanghai city/shang hai shi$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/rynek_gwny_krakow_poland_h225_r100_20250317_181315.jpg",
+      "prediction": "<answer>Poland,Poland</answer>",
+      "ground_truth": "$poland,lesser poland voivodeship/lesser poland voivodeship/małopolskie voivodeship/malopolskie voivodeship/województwo małopolskie/województwo małopolskie/lesser poland/lesser poland$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/grand_place_brussels_belgium_h315_r100_20250317_180900.jpg",
+      "prediction": "<answer>Belgium,Brussels</answer>",
+      "ground_truth": "$belgium,brussels/bruxelles/brussels-capital region/brussels region/brussels-capital/bruxelles-capitale/région de bruxelles-capitale$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/south_bank_parklands_south_brisbane_qld_4101_australia_h225_r100_20250317_182111.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,queensland/qld/queensland state/the sunshine state$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/trastevere_rome_italy_h0_r100_20250317_183136.jpg",
+      "prediction": "<answer>France,France</answer>",
+      "ground_truth": "$italy,lazio/lazio/latium/latium$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/mercat_de_santa_caterina_el_born_barcelona_spain_h90_r100_20250317_203259.jpg",
+      "prediction": "<answer>Spain,Catalonia</answer>",
+      "ground_truth": "$spain,catalonia/catalunya/catalunya/cataluña/autonomous community of catalonia$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/lozenets_sofia_bulgaria_h135_r100_20250317_194414.jpg",
+      "prediction": "<answer>Ukraine, Kyiv</answer>",
+      "ground_truth": "$bulgaria,sofia city province/sofia capital city/sofia/capital municipality of sofia/sofia city$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/souq_al-sulaimaniah_al_olaya_riyadh_saudi_arabia_h135_r100_20250317_183612.jpg",
+      "prediction": "<answer>Saudi Arabia, Saudi Arabia</answer>",
+      "ground_truth": "$saudi arabia,riyadh province/ar riyadh/al riyadh/riyadh region/riyadh$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/north_lakes_drive_north_lakes_brisbane_australia_h90_r100_20250317_193438.jpg",
+      "prediction": "<answer>Australia,Australia</answer>",
+      "ground_truth": "$australia,queensland/qld/the sunshine state$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/hurstmere_road_takapuna_auckland_new_zealand_h0_r100_20250317_182406.jpg",
+      "prediction": "<answer>Australia,New South Wales</answer>",
+      "ground_truth": "$new zealand,auckland/auckland/the auckland region/the auckland region/tāmaki makaurau/tāmaki makaurau$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/banpo_seocho-gu_seoul_south_korea_h45_r100_20250317_193706.jpg",
+      "prediction": "<answer>Korea,South Korea</answer>",
+      "ground_truth": "$south korea,seoul/seoul/seoul special city/seoul special city$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/avenida_de_mayo_ramos_meja_buenos_aires_province_argentina_h315_r100_20250317_183826.jpg",
+      "prediction": "<answer>Brazil,Estado de São Paulo</answer>",
+      "ground_truth": "$argentina,province of buenos aires/buenos aires province/provincia de buenos aires$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/whyte_avenue_edmonton_ab_canada_h315_r100_20250317_183810.jpg",
+      "prediction": "<answer>Canada,Alberta</answer>",
+      "ground_truth": "$canada,alberta/alberta/province of alberta/province of alberta$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/plaza_de_santa_ana_28012_madrid_spain_h315_r100_20250317_200009.jpg",
+      "prediction": "<answer>Spain,Madrid</answer>",
+      "ground_truth": "$spain,madrid/comunidad de madrid/community of madrid/autonomous community of madrid$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/quincy_market_boston_ma_usa_h315_r100_20250317_194434.jpg",
+      "prediction": "<answer>United States of America, Pennsylvania</answer>",
+      "ground_truth": "$united states,massachusetts/commonwealth of massachusetts/ma/mass.$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/andheri_east_industrial_area_mumbai_maharashtra_india_h135_r100_20250317_184645.jpg",
+      "prediction": "<answer>India,Andhra Pradesh</answer>",
+      "ground_truth": "$india,maharashtra/maharashtra state/state of maharashtra$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/smith_street_darwin_nt_0800_australia_h315_r100_20250317_193730.jpg",
+      "prediction": "<answer>Australia,Queensland</answer>",
+      "ground_truth": "$australia,northern territory/northern territory/nt$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/chausse_de_waterloo_ixelles_brussels_belgium_h90_r100_20250317_181454.jpg",
+      "prediction": "<answer>Belgium,Flanders</answer>",
+      "ground_truth": "$belgium,brussels/bruxelles/brussel/brussels-capital region/brussels region/brussels-capital$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/presqu'le_69002_lyon_france_h90_r100_20250317_193422.jpg",
+      "prediction": "<answer>France,France</answer>",
+      "ground_truth": "$france,auvergne-rhône-alpes/auvergne-rhone-alpes/auvergne rhone alpes/auvergne rhone alpes/auvergne-rhône-alpes region/auvergne-rhone-alpes region/region auvergne-rhône-alpes/region auvergne-rhone-alpes$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/zhengzhou_hi-tech_industrial_development_zone_zhengzhou_henan_china_place_r2000_20250317_180554.jpg",
+      "prediction": "<answer>China,Henan Province</answer>",
+      "ground_truth": "$china,henan/henan province/he nan/he nan sheng/河南/河南省$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/university_avenue_palmerston_nt_australia_h90_r100_20250317_185644.jpg",
+      "prediction": "<answer>Australia,Territory of the Northern Territory</answer>",
+      "ground_truth": "$australia,northern territory/northern territory/nt/nt$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/hallgrimskirkja_reykjavik_iceland_h135_r100_20250317_193516.jpg",
+      "prediction": "<answer>Iceland,Reykjavík</answer>",
+      "ground_truth": "$iceland,reykjavík/reykjavik/reykjavíkurborg/reykjavik city$",
+      "is_correct": true,
+      "error_type": null
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_first_tier_cities/centro_histrico_arequipa_peru_h135_r100_20250317_182050.jpg",
+      "prediction": "<answer>Peru,Lima</answer>",
+      "ground_truth": "$peru,arequipa/arequipa region/arequipa department$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    },
+    {
+      "image": "/data/phd/tiankaibin/dataset/data/streetview_images_second_tier_cities/downtown_burlington_burlington_on_canada_h0_r100_20250317_201039.jpg",
+      "prediction": "<answer>United States, Massachusetts</answer>",
+      "ground_truth": "$canada,ontario/province of ontario$",
+      "is_correct": false,
+      "error_type": "location_mismatch"
+    }
+  ]
+}
