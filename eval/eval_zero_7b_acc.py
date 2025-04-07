@@ -239,7 +239,8 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                  cot=None,
                  inference_engine="vllm",
                  pipeline_parallel=False,
-                 doubao_api_key=None):
+                 doubao_api_key=None,
+                 use_default_system=False):
     """分析模型效果"""
     # 设置日志
     log_file = setup_logger(output_prefix)
@@ -363,18 +364,39 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             else:
                 # 构建消息
                 if not cot:
-                    messages = [
-                        {
-                            "role": "user",
+                    if use_default_system:
+                        messages = [
+                            {
+                                "role": "user",
                             "content": [
                                 {
                                     "type": "image",
                                     "image": image,
                                 },
-                                {"type": "text", "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"},
+                                {"type": "text", "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"}
                             ],
                         }
-                    ]
+                        ]
+                    else:
+                        messages = [
+                            {
+                                "role": "system",
+                                "content": "You are a helpful assistant good at solving problems with step-by-step reasoning. You should first thinks about the reasoning process in the mind and then provides the user with the answer. The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags."
+                            },
+                            {
+                                "role": "user",
+                                "content": [
+                                {
+                                    "type": "image",
+                                    "image": image,
+                                },
+                                {
+                                    "type": "text", "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"
+                                }
+                            ],
+                            }
+                        ]
+
                 else:
                     messages = [
                         {
@@ -446,7 +468,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 with torch.no_grad():
                     generated_ids = model.generate(
                         **inputs, 
-                        max_new_tokens=512
+                        max_new_tokens=2048
                     )
                 
                 generated_ids_trimmed = [
@@ -577,6 +599,8 @@ if __name__ == "__main__":
                         help='是否使用4卡pipeline并行')
     parser.add_argument('--doubao_api_key', type=str, default=None,
                         help='豆包API密钥，使用豆包API时需要提供')
+    parser.add_argument('--use_default_system', action='store_true',
+                        help='使用训练过的use_default_system')
     
     args = parser.parse_args()
     
@@ -602,7 +626,8 @@ if __name__ == "__main__":
         cot=COT if args.cot else None,
         inference_engine=args.inference_engine,
         pipeline_parallel=args.pipeline_parallel,
-        doubao_api_key=args.doubao_api_key
+        doubao_api_key=args.doubao_api_key,
+        use_default_system=args.use_default_system
     )
 
 # 使用示例:
@@ -611,7 +636,8 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=4,5,6,7  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen32b_eval_results.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-32B-Instruct --pipeline_parallel
 
-# CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_multi/checkpoints/lmm-r1-multi/ckpt/global_step260_hf
+# CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine transformers  --model_name=/data/phd/tiankaibin/experiments_multi_system/checkpoints/lmm-r1-multi-system/ckpt/global_step150_hf --use_default_system
+
 # CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
 
 # CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=383a995e-48c5-4d90-8fa8-51a765abe67e --cot
