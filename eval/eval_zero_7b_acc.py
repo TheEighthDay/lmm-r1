@@ -286,7 +286,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 temperature=0.7,
                 top_p=0.8,
                 repetition_penalty=1.05,
-                max_tokens=512,
+                max_tokens=2048,
                 stop_token_ids=[],
             )
         else:
@@ -364,18 +364,18 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             else:
                 # 构建消息
                 if not cot:
-                    if use_default_system:
+                    if not use_default_system:
                         messages = [
                             {
                                 "role": "user",
-                            "content": [
+                                "content": [
                                 {
                                     "type": "image",
                                     "image": image,
                                 },
                                 {"type": "text", "text": "Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"}
                             ],
-                        }
+                            }
                         ]
                     else:
                         messages = [
@@ -638,7 +638,7 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine transformers  --model_name=/data/phd/tiankaibin/experiments_multi_system/checkpoints/lmm-r1-multi-system/ckpt/global_step150_hf --use_default_system
 
-# CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
+# CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results_system3.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/experiments_deepscaler_system3/checkpoints/lmm-r1-deepscaler-system3/ckpt/global_step100_hf
 
 # CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=383a995e-48c5-4d90-8fa8-51a765abe67e --cot
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot

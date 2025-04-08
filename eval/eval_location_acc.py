@@ -235,7 +235,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
             temperature=0.7,
             top_p=0.8,
             repetition_penalty=1.05,
-            max_tokens=512,
+            max_tokens=2048,
             stop_token_ids=[],
         )
     else:  # transformers
@@ -469,7 +469,7 @@ def evaluate_location_accuracy(model_name, mode, test_file=None, inference_engin
                 inputs = inputs.to(model.device)
                 # 生成回答
                 with torch.no_grad():
-                    generated_ids = model.generate(**inputs, max_new_tokens=512)
+                    generated_ids = model.generate(**inputs, max_new_tokens=2048)
                 
  
                 
@@ -649,9 +649,9 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=2 python eval_location_acc.py --model_name /data/phd/tiankaibin/lmm-r1/finetune/lora_merged_model --mode SFT --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lora_merged_model_SFT_eval_result.json
 
-# CUDA_VISIBLE_DEVICES=0 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_system2/checkpoints/lmm-r1-seekworld-system2 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_system_result.json
+# CUDA_VISIBLE_DEVICES=0 python eval_location_acc.py --model_name /data/phd/tiankaibin/experiments_seekworld_system_length_kl0_2/checkpoints/lmm-r1-seekworld-system-length-kl0_2 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_system_result_length_kl0_2.json
 
-# CUDA_VISIBLE_DEVICES=1 python eval_location_acc_nosystem.py --model_name /data/phd/tiankaibin/experiments_seekworld_system2/checkpoints/lmm-r1-seekworld-system2 --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine transformers  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_nosystem_result.json
+# CUDA_VISIBLE_DEVICES=1 python eval_location_acc_nosystem.py --model_name /data/phd/tiankaibin/experiments_seekworld_system_length_kl0_2/checkpoints/lmm-r1-seekworld-system-length-kl0_2  --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_nosystem_result_length_kl0_2.json
 
 # CUDA_VISIBLE_DEVICES=0 python eval_location_acc_nosystem.py --model_name /data/phd/tiankaibin/experiments_seekworld/checkpoints/lmm-r1-seekworld/ckpt/global_step120_hf --mode RL --test_file /data/phd/tiankaibin/dataset/data/test.jsonl --inference_engine vllm  --output_file /data/phd/tiankaibin/lmm-r1/eval/lmm-r1-seekworld_RL_eval_result_nosystem.json
 

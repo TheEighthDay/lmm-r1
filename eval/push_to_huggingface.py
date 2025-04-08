@@ -179,8 +179,8 @@ if __name__ == "__main__":
 
 
 # python push_to_huggingface.py \
-#     --model_path /data/phd/tiankaibin/experiments_deepscaler_system2/checkpoints/lmm-r1-deepscaler-system2/ckpt/global_step50_hf \
-#     --repo_name Deepscaler_RL \
+#     --model_path /data/phd/tiankaibin/experiments_seekworld_system_length_kl0_2/checkpoints/lmm-r1-seekworld-system-length-kl0_2 \
+#     --repo_name SeekWorld_RL \
 #     --token xx \
 #     --organization SeekWorld \
 #     --private \
