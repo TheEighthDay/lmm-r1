@@ -12,9 +12,10 @@ from PIL import Image
 from datetime import datetime
 import requests
 import base64
-import google.generativeai as genai
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gpt4o_mini import make_request
+import genai
+from io import BytesIO
 
 # 条件导入，根据选择的推理引擎
 try:
@@ -128,6 +129,81 @@ def load_jsonl(file_path):
             data.append(json.loads(line))
     return data
 
+def generate_with_gemini(image_path, api_key, cot=None, model_name=None, max_retries=3, retry_delay=2):
+    """使用Gemini API生成预测地址
+    
+    Args:
+        image_path: 图片路径
+        api_key: Gemini API密钥
+        cot: 是否使用推理提示
+        max_retries: 最大重试次数
+        retry_delay: 重试延迟时间（秒）
+        
+    Returns:
+        str: 生成的预测地址
+    """
+    # 配置API
+    genai.configure(api_key=api_key)
+    
+    for attempt in range(max_retries):
+        try:
+            # 加载图片
+            try:
+                if image_path.startswith(('http://', 'https://')):
+                    response = requests.get(image_path)
+                    image = Image.open(BytesIO(response.content))
+                else:
+                    image = Image.open(image_path)
+            except Exception as e:
+                print(f"加载图片失败: {str(e)}")
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    continue
+                return None
+            
+            # 构建提示
+            if not cot:
+                prompt = """Please analyze this picture: 
+1. The country where this picture was taken (country)
+2. The province/state where this picture was taken (administrative_area_level_1)
+3. Country and administrative area level 1 (in English).
+
+Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. 
+Even if you cannot analyze, give a clear answer including country and administrative area level 1."""
+            else:
+                prompt = COT + """Please analyze this picture: 
+1. The country where this picture was taken (country)
+2. The province/state where this picture was taken (administrative_area_level_1)
+3. Country and administrative area level 1 (in English).
+
+Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. 
+Even if you cannot analyze, give a clear answer including country and administrative area level 1."""
+            
+            # 创建模型实例
+            model = genai.GenerativeModel(model_name)
+            
+            # 生成响应
+            response = model.generate_content([prompt, image])
+            
+            # 检查响应
+            if response and hasattr(response, 'text'):
+                return response.text
+            else:
+                raise Exception("Empty or invalid response")
+                
+        except Exception as e:
+            print(f"Gemini API请求失败: {str(e)}")
+            if attempt < max_retries - 1:
+                print(f"等待{retry_delay}秒后重试...")
+                time.sleep(retry_delay)
+                continue
+            return None
+    
+    return None
+
+
+
+
 def generate_with_doubao(image_path, api_key, cot=None, doubao_model_name=None, max_retries=3, retry_delay=2):
     """使用豆包API生成预测地址
     
@@ -233,30 +309,31 @@ def generate_with_doubao(image_path, api_key, cot=None, doubao_model_name=None, 
     return None
 
 def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct", 
-                  test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
-                  batch_size=1,
-                  output_file="results/qwen7b_eval_results.json",
-                  inference_engine="vllm",
-                  pipeline_parallel=False,
-                  doubao_api_key=None,
-                  doubao_model_name=None,
-                  cot=False):
-    """分析模型性能
+                 test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
+                 batch_size=8,
+                 output_prefix=None,
+                 output_file=None,
+                 cot=None,
+                 inference_engine="vllm",
+                 pipeline_parallel=False,
+                 doubao_api_key=None,
+                 use_default_system=False,
+                 doubao_model_name=None):
+    """分析模型效果"""
+    # 设置日志
+    log_file = setup_logger(output_prefix)
     
-    Args:
-        model_name: 模型名称
-        test_file: 测试文件路径
-        batch_size: 批处理大小
-        output_file: 输出文件路径
-        inference_engine: 推理引擎 (vllm/transformers/doubao/gemini)
-        pipeline_parallel: 是否使用4卡pipeline并行
-        doubao_api_key: 豆包API密钥
-        gemini_api_key: Gemini API密钥
-        cot: 是否使用推理提示
-    """
-    # 检查API密钥
-    if inference_engine == "doubao" and not doubao_api_key:
-        raise ValueError("使用豆包API需要提供API密钥")
+    # 加载模型和处理器
+    print(f"加载模型: {model_name}")
+    print(f"推理引擎: {inference_engine}")
+    print(f"Pipeline并行: {'是' if pipeline_parallel else '否'}")
+    
+    if inference_engine == "doubao":
+        if not doubao_api_key:
+            raise ValueError("使用豆包API需要提供API密钥")
+        print("使用豆包API进行推理")
+    else:
+        processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
         
         if inference_engine == "vllm":
             if not vllm_available:
@@ -357,7 +434,10 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             
             if inference_engine == "doubao":
                 # 使用豆包API生成预测
-                response = generate_with_doubao(image_path, doubao_api_key, cot, doubao_model_name)
+                if "doubao" in doubao_model_name:
+                    response = generate_with_doubao(image_path, doubao_api_key, cot, doubao_model_name)
+                else:
+                    response = generate_with_gemini(image_path, doubao_api_key, cot, doubao_model_name)
                 responses.append(response)
                 batch_image_paths.append(image_path)
                 batch_items.append(item)
@@ -600,6 +680,8 @@ if __name__ == "__main__":
                         help='是否使用4卡pipeline并行')
     parser.add_argument('--doubao_api_key', type=str, default=None,
                         help='豆包API密钥，使用豆包API时需要提供')
+    parser.add_argument('--doubao_model_name', type=str, default="doubao-1.5-vision-pro-32k-250115",
+                        help='豆包模型名称')
     parser.add_argument('--use_default_system', action='store_true',
                         help='使用训练过的use_default_system')
     
@@ -628,8 +710,8 @@ if __name__ == "__main__":
         inference_engine=args.inference_engine,
         pipeline_parallel=args.pipeline_parallel,
         doubao_api_key=args.doubao_api_key,
-        doubao_model_name=args.doubao_model_name,
-        use_default_system=args.use_default_system
+        use_default_system=args.use_default_system,
+        doubao_model_name=args.doubao_model_name
     )
 
 # 使用示例:
@@ -640,10 +722,7 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine transformers  --model_name=/data/phd/tiankaibin/experiments_multi_system/checkpoints/lmm-r1-multi-system/ckpt/global_step150_hf --use_default_system
 
-# CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results_system3.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/experiments_deepscaler_system3/checkpoints/lmm-r1-deepscaler-system3/ckpt/global_step100_hf
+# CUDA_VISIBLE_DEVICES=3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/lmm-r1/experiments_deepscaler/checkpoints/lmm-r1-deepscaler/ckpt/global_step200_hf
 
-
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xx --cot
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot
-
-
-# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xxx  --doubao_model_name=doubao-1.5-vision-pro-32k-250115
