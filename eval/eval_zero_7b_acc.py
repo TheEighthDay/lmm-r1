@@ -12,6 +12,7 @@ from PIL import Image
 from datetime import datetime
 import requests
 import base64
+import google.generativeai as genai
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gpt4o_mini import make_request
 
@@ -232,30 +233,32 @@ def generate_with_doubao(image_path, api_key, cot=None, max_retries=3, retry_del
     return None
 
 def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct", 
-                 test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
-                 batch_size=8,
-                 output_prefix=None,
-                 output_file=None,
-                 cot=None,
-                 inference_engine="vllm",
-                 pipeline_parallel=False,
-                 doubao_api_key=None,
-                 use_default_system=False):
-    """分析模型效果"""
-    # 设置日志
-    log_file = setup_logger(output_prefix)
+                  test_file="/data/phd/tiankaibin/dataset/data/test.jsonl",
+                  batch_size=1,
+                  output_file="results/qwen7b_eval_results.json",
+                  inference_engine="vllm",
+                  pipeline_parallel=False,
+                  doubao_api_key=None,
+                  gemini_api_key=None,
+                  cot=False):
+    """分析模型性能
     
-    # 加载模型和处理器
-    print(f"加载模型: {model_name}")
-    print(f"推理引擎: {inference_engine}")
-    print(f"Pipeline并行: {'是' if pipeline_parallel else '否'}")
-    
-    if inference_engine == "doubao":
-        if not doubao_api_key:
-            raise ValueError("使用豆包API需要提供API密钥")
-        print("使用豆包API进行推理")
-    else:
-        processor = AutoProcessor.from_pretrained(model_name, padding_side='left')
+    Args:
+        model_name: 模型名称
+        test_file: 测试文件路径
+        batch_size: 批处理大小
+        output_file: 输出文件路径
+        inference_engine: 推理引擎 (vllm/transformers/doubao/gemini)
+        pipeline_parallel: 是否使用4卡pipeline并行
+        doubao_api_key: 豆包API密钥
+        gemini_api_key: Gemini API密钥
+        cot: 是否使用推理提示
+    """
+    # 检查API密钥
+    if inference_engine == "doubao" and not doubao_api_key:
+        raise ValueError("使用豆包API需要提供API密钥")
+    if inference_engine == "gemini" and not gemini_api_key:
+        raise ValueError("使用Gemini API需要提供API密钥")
         
         if inference_engine == "vllm":
             if not vllm_available:
@@ -640,5 +643,5 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results_system3.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/experiments_deepscaler_system3/checkpoints/lmm-r1-deepscaler-system3/ckpt/global_step100_hf
 
-# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=383a995e-48c5-4d90-8fa8-51a765abe67e --cot
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xxx --cot
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot
