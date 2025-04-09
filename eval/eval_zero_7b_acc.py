@@ -128,7 +128,7 @@ def load_jsonl(file_path):
             data.append(json.loads(line))
     return data
 
-def generate_with_doubao(image_path, api_key, cot=None, max_retries=3, retry_delay=2):
+def generate_with_doubao(image_path, api_key, cot=None, doubao_model_name=None, max_retries=3, retry_delay=2):
     """使用豆包API生成预测地址
     
     Args:
@@ -197,7 +197,7 @@ def generate_with_doubao(image_path, api_key, cot=None, max_retries=3, retry_del
                 "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
                 headers=headers,
                 json={
-                    "model": "doubao-1.5-vision-pro-32k-250115",
+                    "model": doubao_model_name,
                     "messages": messages
                 }
             )
@@ -239,7 +239,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                   inference_engine="vllm",
                   pipeline_parallel=False,
                   doubao_api_key=None,
-                  gemini_api_key=None,
+                  doubao_model_name=None,
                   cot=False):
     """分析模型性能
     
@@ -257,8 +257,6 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
     # 检查API密钥
     if inference_engine == "doubao" and not doubao_api_key:
         raise ValueError("使用豆包API需要提供API密钥")
-    if inference_engine == "gemini" and not gemini_api_key:
-        raise ValueError("使用Gemini API需要提供API密钥")
         
         if inference_engine == "vllm":
             if not vllm_available:
@@ -359,7 +357,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
             
             if inference_engine == "doubao":
                 # 使用豆包API生成预测
-                response = generate_with_doubao(image_path, doubao_api_key, cot)
+                response = generate_with_doubao(image_path, doubao_api_key, cot, doubao_model_name)
                 responses.append(response)
                 batch_image_paths.append(image_path)
                 batch_items.append(item)
@@ -630,6 +628,7 @@ if __name__ == "__main__":
         inference_engine=args.inference_engine,
         pipeline_parallel=args.pipeline_parallel,
         doubao_api_key=args.doubao_api_key,
+        doubao_model_name=args.doubao_model_name,
         use_default_system=args.use_default_system
     )
 
@@ -643,5 +642,8 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=2 python eval_zero_7b_acc.py --batch_size 4 --output_file results/deepscaler_RL_eval_results_system3.json --inference_engine vllm  --model_name=/data/phd/tiankaibin/experiments_deepscaler_system3/checkpoints/lmm-r1-deepscaler-system3/ckpt/global_step100_hf
 
-# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xxx --cot
+
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot
+
+
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xxx  --doubao_model_name=doubao-1.5-vision-pro-32k-250115
