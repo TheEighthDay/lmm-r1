@@ -248,7 +248,7 @@ def verify_think_process(content: str) -> float:
             ],
             temperature=0.7,
             top_p=0.8,
-            max_tokens=512,
+            max_tokens=2048,
             extra_body={
                 "repetition_penalty": 1.05,
             },
@@ -258,7 +258,7 @@ def verify_think_process(content: str) -> float:
         # 使用正则表达式提取方括号中的数字
         match = re.search(r'\[(\d+)\]', result)
         if match:
-            score = float(match.group(1)) / 2
+            score = float(match.group(1)) 
             logger.info(f"推理验证结果: {result}\n最终得分: {score}")
             return score
         else:
@@ -309,7 +309,7 @@ def get_reward():
         
     acc_rewards = [f.result() for f in acc_rewards_futures]
     think_rewards = [f.result() for f in think_rewards_futures]
-    rewards = [f + a + t for f, a, t in zip(format_rewards, acc_rewards, think_rewards)]
+    rewards = [f + a*2.0 + t for f, a, t in zip(format_rewards, acc_rewards, think_rewards)]
     
     # 返回包含 rewards 的响应
     return jsonify({
