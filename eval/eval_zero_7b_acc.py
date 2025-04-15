@@ -14,8 +14,11 @@ import requests
 import base64
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gpt4o_mini import make_request
-import genai
+from gpt4o_image import make_request as make_request_image
+import google.generativeai as genai
 from io import BytesIO
+from openai import OpenAI
+
 
 # 条件导入，根据选择的推理引擎
 try:
@@ -129,6 +132,9 @@ def load_jsonl(file_path):
             data.append(json.loads(line))
     return data
 
+
+
+
 def generate_with_gemini(image_path, api_key, cot=None, model_name=None, max_retries=3, retry_delay=2):
     """使用Gemini API生成预测地址
     
@@ -201,7 +207,149 @@ Even if you cannot analyze, give a clear answer including country and administra
     
     return None
 
+def generate_with_qvq(image_path, api_key, cot=None, model_name=None, max_retries=3, retry_delay=2):
+    """使用阿里云Qwen-VL模型生成预测地址
+    
+    Args:
+        image_path: 图片路径
+        api_key: API密钥
+        cot: 是否使用推理提示
+        max_retries: 最大重试次数
+        retry_delay: 重试延迟时间（秒）
+        
+    Returns:
+        str: 生成的预测地址
+    """
+    from openai import OpenAI
+    
+    for attempt in range(max_retries):
+        try:
+            # 读取图片并转换为base64
+            with open(image_path, 'rb') as f:
+                encoded_image = base64.b64encode(f.read())
+            encoded_image_text = encoded_image.decode('utf-8')
+            base64_image = f"data:image/jpeg;base64,{encoded_image_text}"
+            
+            # 初始化OpenAI客户端
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+            )
+            
+            # 构建消息
+            if not cot:
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": base64_image
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n"
+                            }
+                        ]
+                    }
+                ]
+            else:
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": base64_image
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": "\n Please analyze this picture: 1. The country where this picture was taken (country) 2. The province/state where this picture was taken (administrative_area_level_1) 3. Country and administrative area level 1 (in English). Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. Even if you cannot analyze, give a clear answer including country and administrative area level 1. \n" + COT
+                            }
+                        ]
+                    }
+                ]
+            
+            # 创建聊天完成请求
+            completion = client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                stream=True
+            )
+            
+            # 处理流式响应
+            reasoning_content = ""
+            answer_content = ""
+            is_answering = False
+            
+            for chunk in completion:
+                # 如果chunk.choices为空，则打印usage
+                if not chunk.choices:
+                    print("\nUsage:")
+                    print(chunk.usage)
+                else:
+                    delta = chunk.choices[0].delta
+                    # 打印思考过程
+                    if hasattr(delta, 'reasoning_content') and delta.reasoning_content is not None:
+                        print(delta.reasoning_content, end='', flush=True)
+                        reasoning_content += delta.reasoning_content
+                    else:
+                        # 开始回复
+                        if delta.content != "" and not is_answering:
+                            print("\n" + "=" * 20 + "完整回复" + "=" * 20 + "\n")
+                            is_answering = True
+                        # 打印回复过程
+                        if delta.content is not None:
+                            print(delta.content, end='', flush=True)
+                            answer_content += delta.content
+            
+            # 组合响应
+            response_text = reasoning_content
+            if answer_content:
+                if response_text:
+                    response_text += "\n"
+                response_text += answer_content
+            
+            if response_text:
+                print("response_text is ", response_text)
+                return response_text
+                
+        except Exception as e:
+            print(f"QVQ API请求出错: {str(e)}")
+            if attempt < max_retries - 1:
+                print(f"第{attempt + 1}次重试...")
+                time.sleep(retry_delay)
+                continue
+            return None
+            
+    return None
 
+def generate_with_gpt4o(image_path, cot=None):
+    if not cot:
+        prompt = """Please analyze this picture: 
+1. The country where this picture was taken (country)
+2. The province/state where this picture was taken (administrative_area_level_1)
+3. Country and administrative area level 1 (in English).
+
+Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. 
+Even if you cannot analyze, give a clear answer including country and administrative area level 1."""
+    else:
+        prompt = COT + """Please analyze this picture: 
+1. The country where this picture was taken (country)
+2. The province/state where this picture was taken (administrative_area_level_1)
+3. Country and administrative area level 1 (in English).
+
+Please answer in the format of <answer>$country,administrative_area_level_1$</answer>. 
+Even if you cannot analyze, give a clear answer including country and administrative area level 1."""
+    response = make_request_image(prompt=prompt, image_path=image_path)
+    try:
+        return response['response'].strip()
+    except:
+        return None
 
 
 def generate_with_doubao(image_path, api_key, cot=None, doubao_model_name=None, max_retries=3, retry_delay=2):
@@ -315,7 +463,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                  output_file=None,
                  cot=None,
                  inference_engine="vllm",
-                 pipeline_parallel=False,
+                 tensor_parallel=False,
                  doubao_api_key=None,
                  use_default_system=False,
                  doubao_model_name=None):
@@ -326,7 +474,7 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
     # 加载模型和处理器
     print(f"加载模型: {model_name}")
     print(f"推理引擎: {inference_engine}")
-    print(f"Pipeline并行: {'是' if pipeline_parallel else '否'}")
+    print(f"tensor并行: {'是' if tensor_parallel else '否'}")
     
     if inference_engine == "doubao":
         if not doubao_api_key:
@@ -340,14 +488,14 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 raise ImportError("vLLM 库不可用，请安装 vllm 或选择 transformers 引擎")
             
             # 使用vLLM加载模型
-            if pipeline_parallel:
-                # 设置4卡pipeline并行
+            if tensor_parallel:
+                # 设置4卡tensor并行
                 llm = LLM(
                     model=model_name,
                     limit_mm_per_prompt={"image": 10, "video": 10},
                     dtype="auto",
                     gpu_memory_utilization=0.8,
-                    pipeline_parallel_size=4,  # pipeline并行大小
+                    tensor_parallel_size=4,  # tensor并行大小
                     trust_remote_code=True,
                 )
             else:
@@ -433,11 +581,16 @@ def analyze_model(model_name="Qwen/Qwen2.5-VL-7B-Instruct",
                 continue
             
             if inference_engine == "doubao":
+                print("model name is ", doubao_model_name)
                 # 使用豆包API生成预测
                 if "doubao" in doubao_model_name:
                     response = generate_with_doubao(image_path, doubao_api_key, cot, doubao_model_name)
-                else:
+                elif "gemini" in doubao_model_name:
                     response = generate_with_gemini(image_path, doubao_api_key, cot, doubao_model_name)
+                elif "gpt4o" in doubao_model_name:
+                    response = generate_with_gpt4o(image_path, cot)
+                elif "qvq" in doubao_model_name:
+                    response = generate_with_qvq(image_path, doubao_api_key, cot, doubao_model_name)
                 responses.append(response)
                 batch_image_paths.append(image_path)
                 batch_items.append(item)
@@ -676,8 +829,8 @@ if __name__ == "__main__":
                         help='是否使用推理提示')
     parser.add_argument('--inference_engine', type=str, default="vllm", choices=["vllm", "transformers", "doubao"],
                         help='推理引擎: vllm, transformers 或 doubao')
-    parser.add_argument('--pipeline_parallel', action='store_true',
-                        help='是否使用4卡pipeline并行')
+    parser.add_argument('--tensor_parallel', action='store_true',
+                        help='是否使用4卡tensor并行')
     parser.add_argument('--doubao_api_key', type=str, default=None,
                         help='豆包API密钥，使用豆包API时需要提供')
     parser.add_argument('--doubao_model_name', type=str, default="doubao-1.5-vision-pro-32k-250115",
@@ -691,7 +844,7 @@ if __name__ == "__main__":
     print(f"模型: {args.model_name}")
     print(f"批处理大小: {args.batch_size}")
     print(f"推理引擎: {args.inference_engine}")
-    print(f"Pipeline并行: {'是' if args.pipeline_parallel else '否'}")
+    print(f"tensor并行: {'是' if args.tensor_parallel else '否'}")
     
     # 设置GPU内存限制
     if torch.cuda.is_available():
@@ -708,17 +861,17 @@ if __name__ == "__main__":
         output_file=args.output_file,
         cot=COT if args.cot else None,
         inference_engine=args.inference_engine,
-        pipeline_parallel=args.pipeline_parallel,
+        tensor_parallel=args.tensor_parallel,
         doubao_api_key=args.doubao_api_key,
         use_default_system=args.use_default_system,
         doubao_model_name=args.doubao_model_name
     )
 
 # 使用示例:
-# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json --inference_engine vllm --pipeline_parallel 
-# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot --inference_engine vllm --pipeline_parallel
+# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results.json --inference_engine vllm --tensor_parallel 
+# CUDA_VISIBLE_DEVICES=0,1,2,3 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot.json --cot --inference_engine vllm --tensor_parallel
 
-# CUDA_VISIBLE_DEVICES=4,5,6,7  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen32b_eval_results.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-32B-Instruct --pipeline_parallel
+# CUDA_VISIBLE_DEVICES=4,5,6,7  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen32b_eval_results.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-32B-Instruct --tensor_parallel
 
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/multiver_RL_eval_results.json --inference_engine transformers  --model_name=/data/phd/tiankaibin/experiments_multi_system/checkpoints/lmm-r1-multi-system/ckpt/global_step150_hf --use_default_system
 
@@ -726,3 +879,15 @@ if __name__ == "__main__":
 
 # CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/doubao_eval_results_cot.json --inference_engine doubao --doubao_api_key=xx --cot
 # CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qwen7b_eval_results_cot_tkbnew.json --inference_engine vllm --model_name=Qwen/Qwen2.5-VL-7B-Instruct --cot
+
+
+# CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/gemini_2_pro_eval_results.json --inference_engine doubao --doubao_api_key=xxx  --doubao_model_name="gemini-2.0-pro-exp-02-05"
+
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/gemini_2_think_pro_eval_results.json --inference_engine doubao --doubao_api_key=xxx  --doubao_model_name=gemini-2.0-flash-thinking-exp-01-21
+
+# CUDA_VISIBLE_DEVICES=1 python eval_zero_7b_acc.py --batch_size 4 --output_file results/gpt4o_eval_results.json --inference_engine doubao  --doubao_model_name=gpt4o  --doubao_api_key=xx
+
+# CUDA_VISIBLE_DEVICES=0 python eval_zero_7b_acc.py --batch_size 4 --output_file results/qvq_max_eval_results.json --inference_engine doubao  --doubao_model_name=qvq-max  --doubao_api_key=xx
+
+
+# CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7  python eval_zero_7b_acc.py --batch_size 4 --output_file results/qvq_eval_results.json --inference_engine vllm --model_name=/data/fuyu/model/QVQ-72B-Preview --tensor_parallel

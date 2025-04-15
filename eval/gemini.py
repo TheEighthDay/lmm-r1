@@ -5,7 +5,7 @@ import time
 import requests
 from io import BytesIO
 
-#'gemini-2.0-pro-exp-02-05', 'gemini-2.0-flash-thinking-exp-01-21'
+#'gemini-2.0-pro-exp-02-05', 'gemini-2.0-flash-thinking-exp-01-21' 'gemini-2.5-pro-preview-03-25'
 
 def make_request(prompt=None, image_path=None, api_key=None, model_name="gemini-pro-vision", max_retries=3, retry_delay=2):
     """
